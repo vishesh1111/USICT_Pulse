@@ -1,2 +1,2 @@
-# USICT_Chit-Chat
+# USICT_Pulse
 Hackathon PS1
