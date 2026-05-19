@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Sparkles, Rocket, Check, Mail } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, Rocket, Check, Mail, Code2, Github, Linkedin, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,15 +13,20 @@ const STEPS = [
   { id: "branch", title: "What's your branch?", desc: "This helps us recommend relevant opportunities.", emoji: "🎯" },
   { id: "year", title: "What year are you in?", desc: "So we can tailor recommendations by seniority.", emoji: "📚" },
   { id: "interests", title: "What interests you?", desc: "Pick at least 3 topics you're passionate about.", emoji: "✨" },
+  { id: "links", title: "Your social profiles", desc: "Boost your visibility among seniors. All optional.", emoji: "🔗" },
   { id: "goals", title: "What are your goals?", desc: "Help us understand what you're working towards.", emoji: "🚀" },
 ];
 
-interface JuniorData { fullName: string; email: string; branch: string; year: number; interests: string[]; goals: string; }
+interface JuniorData {
+  fullName: string; email: string; branch: string; year: number;
+  interests: string[]; goals: string;
+  leetcode?: string; github?: string; linkedin?: string; huggingface?: string; twitter?: string; portfolio?: string;
+}
 
 export function JuniorFlow({ onComplete, onBack }: { onComplete: (data: JuniorData) => void; onBack: () => void }) {
   const [step, setStep] = React.useState(0);
   const [dir, setDir] = React.useState(0);
-  const [data, setData] = React.useState<JuniorData>({ fullName: "", email: "", branch: "", year: 1, interests: [], goals: "" });
+  const [data, setData] = React.useState<JuniorData>({ fullName: "", email: "", branch: "", year: 1, interests: [], goals: "", leetcode: "", github: "", linkedin: "", huggingface: "", twitter: "", portfolio: "" });
   const cur = STEPS[step];
   const progress = ((step + 1) / STEPS.length) * 100;
 
@@ -90,6 +95,32 @@ export function JuniorFlow({ onComplete, onBack }: { onComplete: (data: JuniorDa
               </span>
             </motion.button>
           ))}</div>
+        </div>
+      );
+      case "links": return (
+        <div className="space-y-3">
+          <p className="text-xs text-muted-foreground">All fields are optional — add what you have to stand out!</p>
+          {[
+            { id: "leetcode",    label: "LeetCode",     icon: Code2,    placeholder: "https://leetcode.com/username",       color: "text-amber-400" },
+            { id: "github",     label: "GitHub",       icon: Github,   placeholder: "https://github.com/username",          color: "text-slate-300" },
+            { id: "linkedin",   label: "LinkedIn",     icon: Linkedin, placeholder: "https://linkedin.com/in/username",     color: "text-blue-400" },
+            { id: "huggingface",label: "Hugging Face", icon: Globe,    placeholder: "https://huggingface.co/username",      color: "text-yellow-400" },
+            { id: "twitter",    label: "Twitter / X",  icon: Globe,    placeholder: "https://x.com/username",               color: "text-sky-400" },
+            { id: "portfolio",  label: "Portfolio",    icon: Globe,    placeholder: "https://yourportfolio.dev",             color: "text-emerald-400" },
+          ].map(({ id, label, icon: Icon, placeholder, color }) => (
+            <div key={id} className="flex items-center gap-3">
+              <Icon className={`h-4 w-4 shrink-0 ${color}`} />
+              <div className="flex-1">
+                <Input
+                  placeholder={placeholder}
+                  value={(data as any)[id] || ""}
+                  onChange={e => setData(p => ({ ...p, [id]: e.target.value }))}
+                  className="h-10 border-border/40 bg-background/50 text-sm"
+                />
+              </div>
+              <span className="text-[10px] text-muted-foreground w-16 shrink-0">{label}</span>
+            </div>
+          ))}
         </div>
       );
       case "goals": return (

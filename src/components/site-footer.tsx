@@ -1,3 +1,5 @@
+"use client";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Github, Linkedin, Mail, Heart } from "lucide-react";
 import { Logo } from "./logo";
@@ -33,6 +35,9 @@ const FOOTER_SECTIONS = [
 ];
 
 export function SiteFooter() {
+  const pathname = usePathname();
+  if (pathname === "/onboarding") return null;
+
   return (
     <footer className="relative mt-24 border-t bg-card/30">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pulse-500/40 to-transparent" />

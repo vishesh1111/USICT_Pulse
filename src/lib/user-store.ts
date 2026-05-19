@@ -22,6 +22,11 @@ export interface UserProfile {
   hasInternship?: boolean;
   internshipDetails?: string;
   seniorScore?: number;
+  // Junior social links
+  leetcode?: string;
+  huggingface?: string;
+  twitter?: string;
+  portfolio?: string;
 }
 
 interface UserStore {

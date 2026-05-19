@@ -139,7 +139,7 @@ export default function OnboardingPage() {
     if (mounted && profile?.onboardedAt) router.push("/dashboard");
   }, [mounted, profile, router]);
 
-  const handleJuniorComplete = async (data: { fullName: string; email: string; branch: string; year: number; interests: string[]; goals: string }) => {
+  const handleJuniorComplete = async (data: { fullName: string; email: string; branch: string; year: number; interests: string[]; goals: string; leetcode?: string; github?: string; linkedin?: string; huggingface?: string; twitter?: string; portfolio?: string }) => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 600));
     setProfile({
@@ -152,6 +152,12 @@ export default function OnboardingPage() {
       avatarSeed: data.fullName,
       onboardedAt: new Date().toISOString(),
       role: "junior",
+      leetcode: data.leetcode,
+      github: data.github,
+      linkedin: data.linkedin,
+      huggingface: data.huggingface,
+      twitter: data.twitter,
+      portfolio: data.portfolio,
     });
     toast.success("Profile created! Redirecting to dashboard...");
     // Sync to database
@@ -167,6 +173,8 @@ export default function OnboardingPage() {
         interests: data.interests,
         goals: data.goals.split("\n").filter(Boolean),
         avatarSeed: data.fullName,
+        linkedin: data.linkedin,
+        github: data.github,
       }),
     }).catch(console.error);
     // Send welcome email
