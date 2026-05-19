@@ -39,6 +39,7 @@ export function SiteHeader() {
 
   React.useEffect(() => {
     setMobileOpen(false);
+    setResetting(false);
   }, [pathname]);
 
   const isActive = (href: string) => {
@@ -46,6 +47,8 @@ export function SiteHeader() {
     if (base === "/dashboard") return pathname === "/dashboard";
     return pathname === base || pathname.startsWith(base + "/");
   };
+
+  const isOnboarding = pathname === "/onboarding";
 
   return (
     <>
@@ -60,6 +63,7 @@ export function SiteHeader() {
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-8">
           <Logo />
+          {!isOnboarding && (
           <nav className="hidden items-center gap-1 lg:flex">
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
@@ -113,20 +117,23 @@ export function SiteHeader() {
               );
             })}
           </nav>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/notifications"
-            className="relative hidden h-9 w-9 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground md:inline-flex ring-focus"
-            aria-label="Notifications"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-pulse-500 ring-2 ring-background" />
-          </Link>
+          {!isOnboarding && (
+            <Link
+              href="/notifications"
+              className="relative hidden h-9 w-9 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground md:inline-flex ring-focus"
+              aria-label="Notifications"
+            >
+              <Bell className="h-4 w-4" />
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-pulse-500 ring-2 ring-background" />
+            </Link>
+          )}
           <ThemeToggle />
 
-          {profile ? (
+          {!isOnboarding && profile ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="ring-focus rounded-full">

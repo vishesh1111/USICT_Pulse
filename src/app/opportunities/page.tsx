@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Filter, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,7 @@ import { BRANCHES } from "@/lib/constants";
 // NOTE: `metadata` cannot be exported from a client component. Title is set via
 // `app/opportunities/layout.tsx`.
 
-export default function OpportunitiesPage() {
+function OpportunitiesContent() {
   const searchParams = useSearchParams();
   const [typeFilter, setTypeFilter] = React.useState<string | "all">("all");
   const [branchFilter, setBranchFilter] = React.useState<string | "all">("all");
@@ -163,5 +164,14 @@ export default function OpportunitiesPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+
+export default function OpportunitiesPage() {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-4 py-8 md:py-12"><div className="animate-pulse">Loading opportunities...</div></div>}>
+      <OpportunitiesContent />
+    </Suspense>
   );
 }

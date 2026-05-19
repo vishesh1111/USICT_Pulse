@@ -1,4 +1,4 @@
-import { Star, Link as LinkIcon } from "lucide-react";
+import { Star, Link as LinkIcon, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -24,10 +24,23 @@ export function TeacherCard({ teacher }: TeacherCardProps) {
             <AvatarFallback>{getInitials(teacher.name)}</AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <h3 className="font-display text-lg font-semibold leading-tight">
-              {teacher.name}
-            </h3>
-            <p className="text-sm text-muted-foreground">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="font-display text-lg font-semibold leading-tight truncate">
+                {teacher.name}
+              </h3>
+              {teacher.profileLink && (
+                <Link 
+                  href={teacher.profileLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-pulse-500 transition-colors"
+                  title="View Official Profile"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </Link>
+              )}
+            </div>
+            <p className="text-sm text-muted-foreground truncate">
               {teacher.designation} · {teacher.branch}
             </p>
             <div className="mt-1 flex items-center gap-1 text-sm font-medium text-amber-500">

@@ -1,85 +1,4 @@
-import { getAvatarUrl } from "@/lib/utils";
-import type { MockTeacher } from "./types";
-
-export const MOCK_TEACHERS: MockTeacher[] = [
-  {
-    id: "t-1",
-    name: "Dr. RK Puram",
-    branch: "CSE",
-    subjects: ["Data Structures", "Algorithm Design"],
-    designation: "Professor",
-    photoUrl: getAvatarUrl("Dr RK Puram"),
-    bio: "Teaches core CS subjects with a strong focus on algorithmic problem solving.",
-    yearTaught: [1, 2],
-    rating: 4.5,
-    internalsTrend: "Average",
-    difficulty: "Hard",
-    teachingNature: "Strict but fair",
-    reviews: [
-      {
-        id: "tr-1",
-        author: "Aarav Sharma",
-        branch: "CSE",
-        year: 4,
-        rating: 5,
-        text: "Best professor for DSA. If you pay attention in class, you won't need anything else.",
-        behaviorNote: "Do not use phones in his class.",
-        createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
-      },
-    ],
-  },
-  {
-    id: "t-2",
-    name: "Dr. Sunita Gupta",
-    branch: "IT",
-    subjects: ["Database Management Systems", "Software Engineering"],
-    designation: "Associate Professor",
-    photoUrl: getAvatarUrl("Dr Sunita Gupta"),
-    bio: "Expert in database systems and software architecture.",
-    yearTaught: [2, 3],
-    rating: 4.8,
-    internalsTrend: "Generous",
-    difficulty: "Moderate",
-    teachingNature: "Very helpful and supportive",
-    reviews: [
-      {
-        id: "tr-2",
-        author: "Rohan Gupta",
-        branch: "IT",
-        year: 3,
-        rating: 5,
-        text: "Make sure you do the assignments properly, she rewards genuine effort.",
-        behaviorNote: "Always open to clear doubts after class.",
-        createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
-      },
-    ],
-  },
-  {
-    id: "t-3",
-    name: "Prof. Amit Singh",
-    branch: "ECE",
-    subjects: ["Analog Electronics", "Digital Signal Processing"],
-    designation: "Professor",
-    photoUrl: getAvatarUrl("Prof Amit Singh"),
-    bio: "A veteran in the ECE department, brings industry knowledge into the classroom.",
-    yearTaught: [1, 2],
-    rating: 3.9,
-    internalsTrend: "Strict",
-    difficulty: "Hard",
-    teachingNature: "Old-school",
-    reviews: [
-      {
-        id: "tr-3",
-        author: "Kabir Singh",
-        branch: "ECE",
-        year: 4,
-        rating: 4,
-        text: "Very knowledgeable but his exams are extremely tough.",
-        behaviorNote: "Requires mandatory 75% attendance.",
-        createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-      },
-    ],
-  },
+[
   {
     "id": "t-4",
     "name": "Dr.    Yogesh Singh",
@@ -953,4 +872,4 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "teachingNature": "Professional",
     "reviews": []
   }
-];
+]

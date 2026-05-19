@@ -37,6 +37,7 @@ export interface MockTeacher {
   internalsTrend: "Generous" | "Average" | "Strict";
   difficulty: "Easy" | "Moderate" | "Hard";
   teachingNature: string;
+  profileLink?: string;
   reviews: MockTeacherReview[];
 }
 

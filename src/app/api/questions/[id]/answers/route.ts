@@ -4,10 +4,10 @@ import { prisma } from "@/lib/prisma";
 // POST — Senior answers a question
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id: questionId } = params;
+    const { id: questionId } = await params;
     const body = await req.json();
     const { body: answerBody, authorEmail } = body;
 

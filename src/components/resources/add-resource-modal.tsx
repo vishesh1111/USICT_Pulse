@@ -110,7 +110,7 @@ export function AddResourceModal({ open, onClose }: { open: boolean; onClose: ()
       usefulness: 0,
       votes: 0,
       createdAt: new Date().toISOString(),
-      ...(mode === "file" && { fileData, fileName, fileType }),
+      ...(mode === "file" && { fileData: fileData || undefined, fileName, fileType }),
     };
 
     addResource(resource);
