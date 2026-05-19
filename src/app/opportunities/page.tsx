@@ -25,7 +25,7 @@ function OpportunitiesContent() {
   const searchParams = useSearchParams();
   const [typeFilter, setTypeFilter] = React.useState<string | "all">("all");
   const [branchFilter, setBranchFilter] = React.useState<string | "all">("all");
-  const [statusFilter, setStatusFilter] = React.useState<string | "all">("OPEN");
+  const [statusFilter, setStatusFilter] = React.useState<string | "all">("all");
 
   // Get initial tab from query param
   React.useEffect(() => {
@@ -60,6 +60,55 @@ function OpportunitiesContent() {
         <p className="mt-2 text-muted-foreground">
           Curated for USICT. {filteredOpportunities.length} matching your criteria.
         </p>
+      </div>
+
+      {/* Featured Clubs Showcase */}
+      <div className="mb-10 overflow-visible rounded-2xl border border-pulse-500/20 bg-gradient-to-r from-pulse-500/5 to-fuchsia-500/5 p-6 backdrop-blur-sm relative z-20">
+        <h2 className="mb-4 font-display text-lg font-semibold flex items-center gap-2">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pulse-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-pulse-500"></span>
+          </span>
+          Featured Societies @ USICT
+        </h2>
+        <div className="flex flex-wrap items-center gap-3">
+          
+          {/* ACM Umbrella */}
+          <div className="group relative">
+            <a href="https://usict.acm.org/" target="_blank" rel="noopener noreferrer">
+              <Badge variant="outline" className="cursor-pointer border-pulse-500/40 bg-pulse-500/10 px-4 py-2 text-sm font-bold text-pulse-400 transition-all duration-300 hover:scale-105 hover:bg-pulse-500/20 hover:shadow-[0_0_15px_rgba(58,96,255,0.3)]">
+                USICT ACM
+              </Badge>
+            </a>
+            {/* Hover Dropdown */}
+            <div className="absolute left-0 top-full mt-3 hidden w-56 rounded-xl border border-white/[0.08] bg-card/95 p-2 shadow-2xl backdrop-blur-xl group-hover:block z-50 transform opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div className="mb-2 px-3 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">ACM Sub-Clubs</div>
+              <div className="flex flex-col space-y-0.5">
+                {["En-Game (Gaming)", "ICPC (Competitive)", "Robotics", "Dev-Source", "Innovate AI", "CyberChain"].map(club => (
+                  <div key={club} className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-pulse-500/20 hover:text-pulse-300">
+                    {club}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <span className="text-muted-foreground/40 hidden sm:inline">|</span>
+
+          {/* Other Clubs */}
+          {[
+            { name: "IEEE", url: "https://ieee-official-site.vercel.app/" },
+            { name: "TechSpace", url: "https://techspace-usict.github.io/Techspace-New/#/" },
+            { name: "IETE", url: "https://ietedelhi.com/" },
+            { name: "GDG / SDC", url: "https://sdc.ggsipu.ac.in/" }
+          ].map(club => (
+             <a href={club.url} target="_blank" rel="noopener noreferrer" key={club.name}>
+               <Badge variant="outline" className="cursor-pointer border-border/60 bg-background/50 px-4 py-2 text-sm font-medium transition-all duration-300 hover:-translate-y-1 hover:border-fuchsia-500/50 hover:bg-fuchsia-500/10 hover:text-fuchsia-400 hover:shadow-[0_4px_15px_rgba(217,70,239,0.2)]">
+                 {club.name}
+               </Badge>
+             </a>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-4">

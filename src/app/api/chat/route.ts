@@ -1,6 +1,6 @@
 import { streamText } from 'ai';
 import { google } from '@ai-sdk/google';
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { MOCK_OPPORTUNITIES } from "@/lib/mock/opportunities";
 import { MOCK_RESOURCES } from "@/lib/mock/resources";
 
@@ -69,14 +69,14 @@ Address the user by name occasionally.
 
     // 4. Generate & Stream
     const result = await streamText({
-      model: google('gemini-1.5-flash'),
+      model: google('gemini-3.1-pro'),
       messages: [
         { role: 'system', content: systemPrompt },
         ...messages,
       ],
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error("Chat API Error:", error);
     return new Response(JSON.stringify({ error: "Failed to process chat" }), {

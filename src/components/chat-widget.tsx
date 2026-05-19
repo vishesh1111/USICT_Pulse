@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useChat } from "@ai-sdk/react";
+
 import { Bot, X, MessageSquare, Send, Sparkles, User, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -12,17 +12,15 @@ export function ChatWidget() {
   const [isOpen, setIsOpen] = React.useState(false);
   const profile = useUserStore((s) => s.profile);
   
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: '/api/chat',
-    body: { userProfile: profile },
-    initialMessages: [
-      {
-        id: '1',
-        role: 'assistant',
-        content: `Hi ${profile?.fullName?.split(' ')[0] || 'there'}! 👋 I'm the USICT PULSE AI. I can help you find internships, answer queries, or guide you through USICT. What's on your mind?`
-      }
-    ]
-  });
+  const [messages, setMessages] = React.useState<Array<{ id: string, role: string, content: string }>>([
+    {
+      id: '1',
+      role: 'assistant',
+      content: `Hi ${profile?.fullName?.split(' ')[0] || 'there'}! 👋 I'm the USICT PULSE AI. I can help you find internships, answer queries, or guide you through USICT. What's on your mind?`
+    }
+  ]);
+  const [input, setInput] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
@@ -31,6 +29,50 @@ export function ChatWidget() {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isOpen]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    
+    const userMessage = { id: Date.now().toString(), role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: [...messages, userMessage], userProfile: profile }),
+      });
+
+      if (!res.ok) throw new Error("API error");
+
+      const reader = res.body?.getReader();
+      const decoder = new TextDecoder();
+      if (!reader) return;
+
+      let botMessage = { id: (Date.now() + 1).toString(), role: "assistant", content: "" };
+      setMessages((prev) => [...prev, botMessage]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+        
+        botMessage.content += chunk;
+        setMessages((prev) => {
+          const newMsgs = [...prev];
+          newMsgs[newMsgs.length - 1] = { ...botMessage };
+          return newMsgs;
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -110,17 +152,10 @@ export function ChatWidget() {
 
             {/* Input */}
             <div className="p-3 border-t border-white/[0.08] bg-background/50">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!input.trim() || isLoading) return;
-                  handleSubmit(e);
-                }}
-                className="relative flex items-center"
-              >
+              <form onSubmit={handleSubmit} className="relative flex items-center">
                 <input
                   value={input}
-                  onChange={handleInputChange}
+                  onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask about internships, resources..."
                   className="w-full rounded-xl border border-border/50 bg-background/50 py-3 pl-4 pr-12 text-sm placeholder:text-muted-foreground/60 focus:border-pulse-500/50 focus:outline-none focus:ring-1 focus:ring-pulse-500/50"
                   autoFocus
