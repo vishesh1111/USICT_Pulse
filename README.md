@@ -61,7 +61,7 @@ A floating chat widget available on every page. The assistant is RAG-powered —
 
 It also knows your profile (branch, year, interests) and personalizes responses accordingly. Streams responses in markdown for clean formatting.
 
-### UI / UX Polish
+### UI / UX 
 
 - **Glassmorphism design** — frosted blur, soft indigo-tinted shadows, cool-white light mode and deep navy dark mode.
 - **Animated navbar** — floating pill bar with shadow-on-scroll, sliding active indicator (Framer Motion `layoutId`), grouped "More" dropdown with icons.
@@ -131,33 +131,8 @@ npm install --legacy-peer-deps
 
 > The `--legacy-peer-deps` flag is needed because of React 19 RC peer dependency mismatches with some libs. The project's `.npmrc` handles this automatically.
 
-### 3. Configure environment variables
 
-Copy the example file:
-
-```bash
-cp .env.example .env.local
-```
-
-Fill in `.env.local`:
-
-```dotenv
-# Supabase Postgres (connection pooling — for runtime)
-DATABASE_URL="postgresql://postgres:[PASSWORD]@[HOST]:6543/postgres?pgbouncer=true"
-
-# Direct connection (for migrations)
-DIRECT_URL="postgresql://postgres:[PASSWORD]@[HOST]:5432/postgres"
-
-# Gemini API (server-side, NOT NEXT_PUBLIC)
-GOOGLE_GENERATIVE_AI_API_KEY="your-gemini-api-key"
-
-# EmailJS (optional — for welcome emails)
-NEXT_PUBLIC_EMAILJS_SERVICE_ID=""
-NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=""
-NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=""
-```
-
-### 4. Set up the database
+### 3. Set up the database
 
 Push the Prisma schema to your Supabase database:
 
@@ -171,7 +146,7 @@ npm run db:push
 npm run db:seed
 ```
 
-### 5. Run the dev server
+### 4. Run the dev server
 
 ```bash
 npm run dev
