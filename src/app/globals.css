@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 230 96% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 220 14% 96%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 230 96% 56%;
+
+    --radius: 0.85rem;
+  }
+
+  .dark {
+    --background: 224 47% 5%;
+    --foreground: 210 20% 98%;
+
+    --card: 224 40% 8%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 224 40% 8%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 230 95% 66%;
+    --primary-foreground: 224 47% 5%;
+
+    --secondary: 224 30% 14%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 224 30% 14%;
+    --muted-foreground: 220 10% 65%;
+
+    --accent: 224 30% 16%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 224 25% 18%;
+    --input: 224 25% 18%;
+    --ring: 230 95% 66%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+  }
+  ::selection {
+    @apply bg-pulse-500/30 text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-pulse-500 via-fuchsia-500 to-pulse-600 bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: gradient-x 6s ease infinite;
+  }
+
+  .glass {
+    @apply border border-white/10 bg-white/60 backdrop-blur-xl dark:bg-white/5;
+  }
+
+  .glass-strong {
+    @apply border border-white/20 bg-white/80 backdrop-blur-2xl dark:bg-white/[0.06];
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-pulse-500/10;
+  }
+
+  .ring-focus {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pulse-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  .bg-radial-fade {
+    background: radial-gradient(
+      ellipse 70% 60% at 50% 0%,
+      rgb(99 102 241 / 0.22),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .bg-mesh {
+    background-image:
+      radial-gradient(at 20% 20%, rgb(99 102 241 / 0.18) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgb(217 70 239 / 0.18) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgb(34 211 238 / 0.12) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, rgb(244 114 182 / 0.12) 0px, transparent 50%);
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-muted-foreground/30;
+  }
+}
+
+/* Splash screen */
+.splash-enter {
+  animation: splashIn 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.splash-exit {
+  animation: splashOut 500ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+@keyframes splashIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes splashOut {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
+}

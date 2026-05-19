@@ -1,0 +1,271 @@
+// USICT PULSE — Prisma Schema
+// Supabase Postgres-compatible
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  STUDENT
+  SENIOR
+  ALUMNI
+  ADMIN
+}
+
+enum Branch {
+  CSE
+  IT
+  ECE
+  CSEAI
+  CSEDS
+}
+
+enum OpportunityType {
+  INTERNSHIP
+  SCHOLARSHIP
+  CLUB
+  LOCAL
+}
+
+enum OpportunityStatus {
+  OPEN
+  CLOSED
+  UPCOMING
+}
+
+enum ResourceType {
+  VIDEO
+  ARTICLE
+  PDF
+  GITHUB
+  PLAYLIST
+  COURSE
+  CHEATSHEET
+}
+
+enum ResourceSubject {
+  DBMS
+  OOPS
+  DSA
+  LLD
+  HLD
+  OS
+  CN
+  SYSTEM_DESIGN
+  AI_ML
+  WEB_DEV
+}
+
+enum NotificationType {
+  DEADLINE
+  OPPORTUNITY
+  MESSAGE
+  ANSWER
+  REVIEW
+  SYSTEM
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  fullName     String
+  avatarUrl    String?
+  role         Role     @default(STUDENT)
+  college      String   @default("USICT, GGSIPU")
+  branch       Branch?
+  year         Int? // 1, 2, 3, 4
+  cgpa         Float?
+  bio          String?
+  interests    String[] @default([])
+  skills       String[] @default([])
+  achievements String[] @default([])
+  graduationYear Int?
+  company      String?
+  position     String?
+  linkedin     String?
+  github       String?
+  isMentor     Boolean  @default(false)
+  mentoringTopics String[] @default([])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  questions        Question[]      @relation("AskedBy")
+  answers          Answer[]
+  reviews          TeacherReview[]
+  resources        Resource[]
+  notifications    Notification[]
+  resumeFeedbacks  ResumeFeedback[] @relation("Reviewer")
+  resumes          Resume[]
+  connectionsFrom  Connection[]    @relation("From")
+  connectionsTo    Connection[]    @relation("To")
+
+  @@index([branch, year])
+}
+
+model Teacher {
+  id          String   @id @default(cuid())
+  name        String
+  email       String?
+  branch      Branch
+  subjects    String[] @default([])
+  designation String?
+  photoUrl    String?
+  bio         String?
+  yearTaught  Int[]    @default([])
+  createdAt   DateTime @default(now())
+
+  reviews TeacherReview[]
+
+  @@index([branch])
+}
+
+model TeacherReview {
+  id              String   @id @default(cuid())
+  teacherId       String
+  authorId        String
+  rating          Int // 1-5
+  teachingNature  String?
+  internalsTrend  String? // "Generous" | "Average" | "Strict"
+  difficulty      String? // "Easy" | "Moderate" | "Hard"
+  behaviorNote    String?
+  reviewText      String
+  anonymous       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  author  User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([teacherId])
+}
+
+model Opportunity {
+  id          String            @id @default(cuid())
+  title       String
+  type        OpportunityType
+  status      OpportunityStatus @default(OPEN)
+  organization String?
+  description String
+  eligibility String?
+  deadline    DateTime?
+  applyUrl    String?
+  tags        String[]          @default([])
+  branches    Branch[]          @default([])
+  stipend     String?
+  location    String?
+  featured    Boolean           @default(false)
+  createdAt   DateTime          @default(now())
+
+  @@index([type, status])
+}
+
+model Question {
+  id          String   @id @default(cuid())
+  authorId    String?
+  title       String
+  body        String
+  branch      Branch?
+  tags        String[] @default([])
+  anonymous   Boolean  @default(true)
+  helpfulCount Int     @default(0)
+  createdAt   DateTime @default(now())
+
+  author  User?    @relation("AskedBy", fields: [authorId], references: [id], onDelete: SetNull)
+  answers Answer[]
+
+  @@index([branch, createdAt])
+}
+
+model Answer {
+  id          String   @id @default(cuid())
+  questionId  String
+  authorId    String
+  body        String
+  helpfulCount Int     @default(0)
+  createdAt   DateTime @default(now())
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  author   User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model Resource {
+  id          String          @id @default(cuid())
+  title       String
+  subject     ResourceSubject
+  type        ResourceType
+  description String
+  link        String
+  recommendedById String
+  usefulness  Float           @default(0)
+  votes       Int             @default(0)
+  tags        String[]        @default([])
+  createdAt   DateTime        @default(now())
+
+  recommendedBy User @relation(fields: [recommendedById], references: [id], onDelete: Cascade)
+
+  @@index([subject])
+}
+
+model Resume {
+  id        String   @id @default(cuid())
+  userId    String
+  fileUrl   String
+  fileName  String
+  version   Int      @default(1)
+  createdAt DateTime @default(now())
+
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feedbacks ResumeFeedback[]
+
+  @@index([userId])
+}
+
+model ResumeFeedback {
+  id          String   @id @default(cuid())
+  resumeId    String
+  reviewerId  String
+  category    String // "mistake" | "missing_skill" | "irrelevant" | "improvement"
+  comment     String
+  createdAt   DateTime @default(now())
+
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  reviewer User   @relation("Reviewer", fields: [reviewerId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+}
+
+model Connection {
+  id        String   @id @default(cuid())
+  fromId    String
+  toId      String
+  message   String?
+  status    String   @default("PENDING") // PENDING | ACCEPTED | DECLINED
+  createdAt DateTime @default(now())
+
+  from User @relation("From", fields: [fromId], references: [id], onDelete: Cascade)
+  to   User @relation("To", fields: [toId], references: [id], onDelete: Cascade)
+
+  @@unique([fromId, toId])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  body      String
+  link      String?
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+}
