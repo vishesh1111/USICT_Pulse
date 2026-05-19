@@ -1,19 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { Search } from "lucide-react";
+import { Search, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { ResourceCard } from "@/components/resources/resource-card";
+import { AddResourceModal } from "@/components/resources/add-resource-modal";
 import { MOCK_RESOURCES } from "@/lib/mock";
+import { useResourceStore } from "@/lib/resource-store";
+import { useUserStore } from "@/lib/user-store";
 
 const SUBJECTS = [
   "DBMS", "OOPS", "DSA", "LLD", "HLD", "OS", "CN", "SYSTEM_DESIGN", "AI_ML", "WEB_DEV"
@@ -22,8 +21,19 @@ const SUBJECTS = [
 export default function ResourcesPage() {
   const [search, setSearch] = React.useState("");
   const [subjectFilter, setSubjectFilter] = React.useState<string>("all");
+  const [modalOpen, setModalOpen] = React.useState(false);
 
-  const filteredResources = MOCK_RESOURCES.filter((resource) => {
+  const profile = useUserStore((s) => s.profile);
+  const userResources = useResourceStore((s) => s.resources);
+  const isSenior = profile?.role === "senior";
+
+  // Merge mock + user-added resources, newest first
+  const allResources = React.useMemo(() => {
+    const merged = [...userResources, ...MOCK_RESOURCES];
+    return merged.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }, [userResources]);
+
+  const filteredResources = allResources.filter((resource) => {
     const matchesSearch =
       resource.title.toLowerCase().includes(search.toLowerCase()) ||
       resource.description.toLowerCase().includes(search.toLowerCase()) ||
@@ -37,13 +47,24 @@ export default function ResourcesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
-      <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
-          Resources Library
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          Curated collection of notes, playlists, and roadmaps by seniors.
-        </p>
+      <div className="mb-8 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+            Resources Library
+          </h1>
+          <p className="mt-2 text-muted-foreground">
+            Curated collection of notes, playlists, and roadmaps by seniors.
+          </p>
+        </div>
+        {isSenior && (
+          <Button
+            onClick={() => setModalOpen(true)}
+            className="shrink-0 bg-gradient-to-r from-pulse-500 to-fuchsia-600 font-semibold shadow-lg shadow-pulse-500/20"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Resource
+          </Button>
+        )}
       </div>
 
        <div className="mb-8 space-y-4 md:flex md:gap-4 md:space-y-0">
@@ -72,7 +93,7 @@ export default function ResourcesPage() {
       {filteredResources.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredResources.map((resource) => (
-               <ResourceCard key={resource.id} resource={resource} />
+               <ResourceCard key={resource.id} resource={resource as any} />
             ))}
           </div>
       ) : (
@@ -85,6 +106,9 @@ export default function ResourcesPage() {
             </CardContent>
           </Card>
       )}
+
+      {/* Add Resource Modal — only renders for seniors */}
+      {isSenior && <AddResourceModal open={modalOpen} onClose={() => setModalOpen(false)} />}
     </div>
   );
 }

@@ -1,12 +1,18 @@
-import { ExternalLink, ThumbsUp } from "lucide-react";
+import { ExternalLink, ThumbsUp, Download, FileText, Image } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { timeAgo } from "@/lib/utils";
 import type { MockResource } from "@/lib/mock/types";
 
+interface ExtendedResource extends MockResource {
+  fileData?: string;
+  fileName?: string;
+  fileType?: string;
+}
+
 interface ResourceCardProps {
-  resource: MockResource;
+  resource: ExtendedResource;
 }
 
 export function ResourceCard({ resource }: ResourceCardProps) {
@@ -20,18 +26,45 @@ export function ResourceCard({ resource }: ResourceCardProps) {
     CHEATSHEET: "bg-purple-500/10 text-purple-500 hover:bg-purple-500/20 border-purple-500/20",
   };
 
+  const isFile = !!resource.fileData;
+  const isImage = resource.fileType?.startsWith("image/");
+
+  const handleDownload = () => {
+    if (!resource.fileData) return;
+    const a = document.createElement("a");
+    a.href = resource.fileData;
+    a.download = resource.fileName || "resource";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
     <Card className="card-hover overflow-hidden border-border/60 bg-card/50 backdrop-blur">
       <CardContent className="flex flex-col p-5 h-full">
         <div className="mb-3 flex items-start justify-between gap-2">
-          <Badge variant="outline" className={`text-[10px] ${typeColors[resource.type] || ""}`}>
-            {resource.type}
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className={`text-[10px] ${typeColors[resource.type] || ""}`}>
+              {resource.type}
+            </Badge>
+            {isFile && (
+              <Badge variant="outline" className="text-[10px] bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/20">
+                {isImage ? <><Image className="mr-1 h-2.5 w-2.5" />Image</> : <><FileText className="mr-1 h-2.5 w-2.5" />File</>}
+              </Badge>
+            )}
+          </div>
           <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
             <ThumbsUp className="h-3 w-3" />
             <span>{resource.votes}</span>
           </div>
         </div>
+
+        {/* Image preview for uploaded images */}
+        {isFile && isImage && resource.fileData && (
+          <div className="mb-3 overflow-hidden rounded-lg border border-border/40">
+            <img src={resource.fileData} alt={resource.title} className="h-32 w-full object-cover" />
+          </div>
+        )}
 
         <h3 className="font-display text-base font-semibold leading-tight mb-2 line-clamp-2">
           {resource.title}
@@ -55,11 +88,17 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                 <span className="shrink-0">{timeAgo(resource.createdAt)}</span>
             </div>
             
-            <Button size="sm" className="w-full" asChild>
+            {isFile ? (
+              <Button size="sm" className="w-full" onClick={handleDownload}>
+                Download File <Download className="ml-2 h-3.5 w-3.5" />
+              </Button>
+            ) : (
+              <Button size="sm" className="w-full" asChild>
                 <a href={resource.link} target="_blank" rel="noopener noreferrer">
-                    Open Resource <ExternalLink className="ml-2 h-3.5 w-3.5" />
+                  Open Resource <ExternalLink className="ml-2 h-3.5 w-3.5" />
                 </a>
-            </Button>
+              </Button>
+            )}
         </div>
       </CardContent>
     </Card>

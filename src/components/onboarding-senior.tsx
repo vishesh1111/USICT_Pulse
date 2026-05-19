@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Sparkles, Check, Linkedin, Github, Trophy } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, Check, Linkedin, Github, Trophy, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +19,7 @@ const STEPS = [
 ];
 
 export interface SeniorData {
-  fullName: string; branch: string; linkedin: string; github: string;
+  fullName: string; email: string; branch: string; linkedin: string; github: string;
   clubs: string[]; cgpa: number; hasInternship: boolean; internshipDetails: string;
 }
 
@@ -79,7 +79,7 @@ export function SeniorFlow({ onComplete, onBack }: { onComplete: (data: SeniorDa
   const [dir, setDir] = React.useState(0);
   const [scoreResult, setScoreResult] = React.useState<ScoreBreakdown | null>(null);
   const [data, setData] = React.useState<SeniorData>({
-    fullName: "", branch: "", linkedin: "", github: "", clubs: [], cgpa: 0, hasInternship: false, internshipDetails: "",
+    fullName: "", email: "", branch: "", linkedin: "", github: "", clubs: [], cgpa: 0, hasInternship: false, internshipDetails: "",
   });
   const cur = STEPS[step];
   const progress = ((step + 1) / STEPS.length) * 100;
@@ -94,6 +94,7 @@ export function SeniorFlow({ onComplete, onBack }: { onComplete: (data: SeniorDa
 
   const next = () => {
     if (cur.id === "name" && !data.fullName.trim()) { toast.error("Please enter your name"); return; }
+    if (cur.id === "name" && (!data.email.trim() || !data.email.includes("@"))) { toast.error("Please enter a valid email"); return; }
     if (cur.id === "branch" && !data.branch) { toast.error("Please select your branch"); return; }
     if (cur.id === "profiles" && !data.linkedin.trim() && !data.github.trim()) { toast.error("Please provide at least one profile link"); return; }
     if (cur.id === "clubs" && data.cgpa <= 0) { toast.error("Please enter your CGPA"); return; }
@@ -120,6 +121,11 @@ export function SeniorFlow({ onComplete, onBack }: { onComplete: (data: SeniorDa
         <div className="space-y-4">
           <Label htmlFor="sname">Full name</Label>
           <Input id="sname" placeholder="Aarav Sharma" value={data.fullName} onChange={e => setData(p => ({ ...p, fullName: e.target.value }))} autoFocus className="h-12 border-border/40 bg-background/50 text-base" />
+          <div>
+            <Label htmlFor="semail" className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5 text-pulse-400" />Email address</Label>
+            <Input id="semail" type="email" placeholder="aarav@gmail.com" value={data.email} onChange={e => setData(p => ({ ...p, email: e.target.value }))} className="mt-1.5 h-12 border-border/40 bg-background/50 text-base" />
+            <p className="mt-1 text-[11px] text-muted-foreground">We&apos;ll send deadline alerts and question notifications here.</p>
+          </div>
         </div>
       );
       case "branch": return (

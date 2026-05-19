@@ -10,6 +10,7 @@ import { AnimatedBackground } from "@/components/onboarding-shared";
 import { JuniorFlow } from "@/components/onboarding-junior";
 import { SeniorFlow, type SeniorData } from "@/components/onboarding-senior";
 import { toast } from "sonner";
+import { sendWelcomeEmail, isEmailJSConfigured } from "@/lib/emailjs";
 
 type Phase = "role" | "junior" | "senior";
 
@@ -138,12 +139,12 @@ export default function OnboardingPage() {
     if (mounted && profile?.onboardedAt) router.push("/dashboard");
   }, [mounted, profile, router]);
 
-  const handleJuniorComplete = async (data: { fullName: string; branch: string; year: number; interests: string[]; goals: string }) => {
+  const handleJuniorComplete = async (data: { fullName: string; email: string; branch: string; year: number; interests: string[]; goals: string }) => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 600));
     setProfile({
       fullName: data.fullName,
-      email: `${data.fullName.toLowerCase().replace(/\s+/g, ".")}@usict.in`,
+      email: data.email,
       branch: data.branch as any,
       year: data.year,
       interests: data.interests,
@@ -153,6 +154,11 @@ export default function OnboardingPage() {
       role: "junior",
     });
     toast.success("Profile created! Redirecting to dashboard...");
+    // Send welcome email
+    sendWelcomeEmail(data.email, data.fullName, "junior").then((sent) => {
+      if (sent) toast("📧 Welcome email sent to " + data.email, { duration: 4000 });
+      else if (!isEmailJSConfigured()) toast("📧 Email simulation: Welcome email → " + data.email, { duration: 4000 });
+    });
     setTimeout(() => router.push("/dashboard"), 800);
   };
 
@@ -161,7 +167,7 @@ export default function OnboardingPage() {
     await new Promise((r) => setTimeout(r, 600));
     setProfile({
       fullName: data.fullName,
-      email: `${data.fullName.toLowerCase().replace(/\s+/g, ".")}@usict.in`,
+      email: data.email,
       branch: data.branch as any,
       year: 3,
       interests: [],
@@ -178,6 +184,11 @@ export default function OnboardingPage() {
       seniorScore: score,
     });
     toast.success("Profile created! Redirecting to dashboard...");
+    // Send welcome email
+    sendWelcomeEmail(data.email, data.fullName, "senior").then((sent) => {
+      if (sent) toast("📧 Welcome email sent to " + data.email, { duration: 4000 });
+      else if (!isEmailJSConfigured()) toast("📧 Email simulation: Welcome email → " + data.email, { duration: 4000 });
+    });
     setTimeout(() => router.push("/dashboard"), 800);
   };
 

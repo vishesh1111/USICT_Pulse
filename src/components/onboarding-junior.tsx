@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Sparkles, Rocket, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, Rocket, Check, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,17 +16,18 @@ const STEPS = [
   { id: "goals", title: "What are your goals?", desc: "Help us understand what you're working towards.", emoji: "🚀" },
 ];
 
-interface JuniorData { fullName: string; branch: string; year: number; interests: string[]; goals: string; }
+interface JuniorData { fullName: string; email: string; branch: string; year: number; interests: string[]; goals: string; }
 
 export function JuniorFlow({ onComplete, onBack }: { onComplete: (data: JuniorData) => void; onBack: () => void }) {
   const [step, setStep] = React.useState(0);
   const [dir, setDir] = React.useState(0);
-  const [data, setData] = React.useState<JuniorData>({ fullName: "", branch: "", year: 1, interests: [], goals: "" });
+  const [data, setData] = React.useState<JuniorData>({ fullName: "", email: "", branch: "", year: 1, interests: [], goals: "" });
   const cur = STEPS[step];
   const progress = ((step + 1) / STEPS.length) * 100;
 
   const next = () => {
     if (cur.id === "name" && !data.fullName.trim()) { toast.error("Please enter your name"); return; }
+    if (cur.id === "name" && (!data.email.trim() || !data.email.includes("@"))) { toast.error("Please enter a valid email"); return; }
     if (cur.id === "branch" && !data.branch) { toast.error("Please select your branch"); return; }
     if (cur.id === "interests" && data.interests.length < 3) { toast.error("Select at least 3 interests"); return; }
     if (cur.id === "goals" && !data.goals.trim()) { toast.error("Please describe your goals"); return; }
@@ -42,6 +43,11 @@ export function JuniorFlow({ onComplete, onBack }: { onComplete: (data: JuniorDa
         <div className="space-y-4">
           <Label htmlFor="jname">Full name</Label>
           <Input id="jname" placeholder="Aarav Sharma" value={data.fullName} onChange={e => setData(p => ({ ...p, fullName: e.target.value }))} autoFocus className="h-12 border-border/40 bg-background/50 text-base" />
+          <div>
+            <Label htmlFor="jemail" className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5 text-pulse-400" />Email address</Label>
+            <Input id="jemail" type="email" placeholder="aarav@gmail.com" value={data.email} onChange={e => setData(p => ({ ...p, email: e.target.value }))} className="mt-1.5 h-12 border-border/40 bg-background/50 text-base" />
+            <p className="mt-1 text-[11px] text-muted-foreground">We&apos;ll send deadline alerts and notifications here.</p>
+          </div>
           {data.fullName && <motion.p className="text-xs text-muted-foreground" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Welcome, <span className="font-semibold text-pulse-400">{data.fullName}</span>! 🎉</motion.p>}
         </div>
       );
