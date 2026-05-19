@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Bell, ChevronDown } from "lucide-react";
 import { cn, getInitials } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
@@ -26,6 +27,8 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const profile = useUserStore((s) => s.profile);
   const clearProfile = useUserStore((s) => s.clearProfile);
+  const router = useRouter();
+  const [resetting, setResetting] = React.useState(false);
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -45,6 +48,7 @@ export function SiteHeader() {
   };
 
   return (
+    <>
     <header
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
@@ -154,7 +158,11 @@ export function SiteHeader() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onSelect={() => {
-                    clearProfile();
+                    setResetting(true);
+                    setTimeout(() => {
+                      clearProfile();
+                      router.push("/onboarding");
+                    }, 800);
                   }}
                   className="text-destructive focus:text-destructive"
                 >
@@ -207,5 +215,103 @@ export function SiteHeader() {
         </div>
       )}
     </header>
+
+      {/* Reset profile animation overlay */}
+      <AnimatePresence>
+        {resetting && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Gradient backdrop */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-br from-[#0f0a1a] via-[#1a0e2e] to-[#0a0a1a]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            />
+
+            {/* Pulsing rings */}
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full border border-purple-500/30"
+                initial={{ width: 0, height: 0, opacity: 0.8 }}
+                animate={{
+                  width: [0, 600 + i * 200],
+                  height: [0, 600 + i * 200],
+                  opacity: [0.8, 0],
+                }}
+                transition={{
+                  duration: 1.2,
+                  delay: i * 0.2,
+                  ease: "easeOut",
+                }}
+              />
+            ))}
+
+            {/* Center content */}
+            <motion.div
+              className="relative z-10 text-center"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 15 }}
+            >
+              {/* Glowing orb */}
+              <motion.div
+                className="mx-auto mb-6 h-20 w-20 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-500 shadow-[0_0_60px_20px_rgba(168,85,247,0.4)]"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  boxShadow: [
+                    "0 0 60px 20px rgba(168,85,247,0.4)",
+                    "0 0 80px 30px rgba(168,85,247,0.6)",
+                    "0 0 60px 20px rgba(168,85,247,0.4)",
+                  ],
+                }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <div className="flex h-full items-center justify-center text-3xl">✨</div>
+              </motion.div>
+
+              <motion.h2
+                className="font-display text-2xl font-bold text-white"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                Starting Fresh
+              </motion.h2>
+              <motion.p
+                className="mt-2 text-sm text-purple-300/80"
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
+                Taking you back to choose your path...
+              </motion.p>
+
+              {/* Loading dots */}
+              <motion.div
+                className="mt-6 flex items-center justify-center gap-1.5"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+              >
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="h-2 w-2 rounded-full bg-purple-400"
+                    animate={{ y: [0, -8, 0], opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 0.6, delay: i * 0.15, repeat: Infinity }}
+                  />
+                ))}
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

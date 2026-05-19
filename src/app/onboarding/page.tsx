@@ -154,6 +154,21 @@ export default function OnboardingPage() {
       role: "junior",
     });
     toast.success("Profile created! Redirecting to dashboard...");
+    // Sync to database
+    fetch("/api/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: data.email,
+        fullName: data.fullName,
+        role: "junior",
+        branch: data.branch,
+        year: data.year,
+        interests: data.interests,
+        goals: data.goals.split("\n").filter(Boolean),
+        avatarSeed: data.fullName,
+      }),
+    }).catch(console.error);
     // Send welcome email
     sendWelcomeEmail(data.email, data.fullName, "junior").then((sent) => {
       if (sent) toast("📧 Welcome email sent to " + data.email, { duration: 4000 });
@@ -184,6 +199,26 @@ export default function OnboardingPage() {
       seniorScore: score,
     });
     toast.success("Profile created! Redirecting to dashboard...");
+    // Sync to database
+    fetch("/api/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: data.email,
+        fullName: data.fullName,
+        role: "senior",
+        branch: data.branch,
+        year: 3,
+        linkedin: data.linkedin,
+        github: data.github,
+        clubs: data.clubs,
+        cgpa: data.cgpa,
+        hasInternship: data.hasInternship,
+        internshipDetails: data.internshipDetails,
+        seniorScore: score,
+        avatarSeed: data.fullName,
+      }),
+    }).catch(console.error);
     // Send welcome email
     sendWelcomeEmail(data.email, data.fullName, "senior").then((sent) => {
       if (sent) toast("📧 Welcome email sent to " + data.email, { duration: 4000 });

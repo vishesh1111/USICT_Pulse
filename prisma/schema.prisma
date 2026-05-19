@@ -85,11 +85,16 @@ model User {
   interests    String[] @default([])
   skills       String[] @default([])
   achievements String[] @default([])
+  goals        String[] @default([])
   graduationYear Int?
   company      String?
   position     String?
   linkedin     String?
   github       String?
+  clubs        String[] @default([])
+  hasInternship    Boolean? @default(false)
+  internshipDetails String?
+  seniorScore  Int?
   isMentor     Boolean  @default(false)
   mentoringTopics String[] @default([])
   createdAt    DateTime @default(now())

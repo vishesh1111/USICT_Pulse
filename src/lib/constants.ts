@@ -74,6 +74,7 @@ export const NAV_LINKS = [
   { href: "/alumni", label: "Alumni" },
   { href: "/teachers", label: "Teachers" },
   { href: "/resources", label: "Resources" },
+  { href: "/leaderboard", label: "Leaderboard" },
   { href: "/notifications", label: "Notifications" },
   { href: "/about", label: "About" },
 ];
