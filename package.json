@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "description": "USICT PULSE — A premium college intelligence platform for USICT, GGSIPU",
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
