@@ -4,8 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { MOCK_OPPORTUNITIES } from "@/lib/mock/opportunities";
 import { MOCK_RESOURCES } from "@/lib/mock/resources";
 
-// Set maximum duration for edge function
-export const maxDuration = 30;
+// Set maximum duration for serverless function (10s for Hobby, 60s for Pro)
+export const maxDuration = 60;
 
 export async function POST(req: Request) {
   try {
