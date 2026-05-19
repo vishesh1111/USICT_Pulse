@@ -13,6 +13,15 @@ export interface UserProfile {
   goals: string[];
   avatarSeed: string;
   onboardedAt: string;
+  role: "junior" | "senior";
+  // Senior-specific fields
+  linkedin?: string;
+  github?: string;
+  clubs?: string[];
+  cgpa?: number;
+  hasInternship?: boolean;
+  internshipDetails?: string;
+  seniorScore?: number;
 }
 
 interface UserStore {

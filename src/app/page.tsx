@@ -1,9 +1,14 @@
+"use client";
+
+import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Sparkles, Users, Briefcase, BookOpen, GraduationCap, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { APP_NAME, APP_TAGLINE, COLLEGE, BRANCHES, BRANCH_LABELS, BRANCH_COLORS } from "@/lib/constants";
+import { useUserStore } from "@/lib/user-store";
 
 const FEATURES = [
   {
@@ -52,6 +57,26 @@ const STATS = [
 ];
 
 export default function HomePage() {
+  const router = useRouter();
+  const profile = useUserStore((s) => s.profile);
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Auto-redirect to onboarding if user hasn't set up their profile
+  React.useEffect(() => {
+    if (mounted && !profile?.onboardedAt) {
+      router.push("/onboarding");
+    }
+  }, [mounted, profile, router]);
+
+  // Show nothing while checking / redirecting
+  if (!mounted || !profile?.onboardedAt) {
+    return null;
+  }
+
   return (
     <div className="relative">
       {/* Hero */}

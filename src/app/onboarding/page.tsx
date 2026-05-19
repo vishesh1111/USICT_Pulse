@@ -2,259 +2,208 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Progress } from "@/components/ui/progress";
+import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap, Award, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useUserStore } from "@/lib/user-store";
-import { BRANCHES, YEARS, INTEREST_OPTIONS } from "@/lib/constants";
+import { AnimatedBackground } from "@/components/onboarding-shared";
+import { JuniorFlow } from "@/components/onboarding-junior";
+import { SeniorFlow, type SeniorData } from "@/components/onboarding-senior";
 import { toast } from "sonner";
 
-// NOTE: `metadata` cannot be exported from a client component. Title is set via
-// `app/onboarding/layout.tsx`.
+type Phase = "role" | "junior" | "senior";
 
-type OnboardingStep = "name" | "branch" | "year" | "interests" | "goals";
+function RoleSelection({ onSelect }: { onSelect: (role: "junior" | "senior") => void }) {
+  const roles = [
+    {
+      id: "junior" as const,
+      icon: GraduationCap,
+      title: "I'm a Junior",
+      subtitle: "1st or 2nd year? Start here",
+      desc: "Set up your profile, discover opportunities, and connect with mentors.",
+      gradient: "from-blue-500 to-cyan-500",
+      glow: "shadow-blue-500/20",
+      emoji: "🎓",
+    },
+    {
+      id: "senior" as const,
+      icon: Award,
+      title: "I'm a Senior",
+      subtitle: "3rd or 4th year? Help juniors grow",
+      desc: "Build your credibility score and become a mentor for your juniors.",
+      gradient: "from-fuchsia-500 to-purple-500",
+      glow: "shadow-fuchsia-500/20",
+      emoji: "🎯",
+    },
+  ];
 
-const STEPS: { id: OnboardingStep; title: string; description: string }[] = [
-  { id: "name", title: "What's your name?", description: "We'll use this to personalize your experience." },
-  { id: "branch", title: "What's your branch?", description: "This helps us recommend relevant opportunities." },
-  { id: "year", title: "What year are you in?", description: "So we can tailor recommendations by seniority." },
-  { id: "interests", title: "What interests you?", description: "Pick at least 3 topics you're passionate about." },
-  { id: "goals", title: "What are your goals?", description: "Help us understand what you're working towards." },
-];
+  return (
+    <div className="mx-auto max-w-2xl">
+      <motion.div
+        className="mb-10 flex flex-col items-center text-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <motion.div
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
+        >
+          <Badge variant="default" className="mb-5 gap-1.5 px-3 py-1.5 text-xs">
+            <Sparkles className="h-3 w-3" />
+            Welcome to USICT PULSE
+          </Badge>
+        </motion.div>
+        <motion.h1
+          className="font-display text-3xl font-bold tracking-tight md:text-4xl"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          Who are you?
+        </motion.h1>
+        <motion.p
+          className="mt-3 text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Choose your role to get a personalized experience.
+        </motion.p>
+      </motion.div>
+
+      <div className="grid gap-5 md:grid-cols-2">
+        {roles.map((role, i) => (
+          <motion.button
+            key={role.id}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 + i * 0.15, type: "spring", stiffness: 200, damping: 20 }}
+            whileHover={{ y: -6, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => onSelect(role.id)}
+            className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-card/40 p-8 text-left backdrop-blur-xl transition-all hover:shadow-2xl hover:${role.glow}`}
+          >
+            {/* Gradient top bar */}
+            <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${role.gradient}`} />
+
+            {/* Background glow on hover */}
+            <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${role.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-[0.06]`} />
+
+            <motion.span
+              className="mb-4 inline-block text-5xl"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.5 + i * 0.15, type: "spring", stiffness: 300, damping: 15 }}
+            >
+              {role.emoji}
+            </motion.span>
+
+            <h2 className="font-display text-xl font-bold">{role.title}</h2>
+            <p className={`mt-1 text-sm font-medium bg-gradient-to-r ${role.gradient} bg-clip-text text-transparent`}>
+              {role.subtitle}
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{role.desc}</p>
+
+            <div className={`mt-5 inline-flex items-center gap-1.5 text-sm font-semibold bg-gradient-to-r ${role.gradient} bg-clip-text text-transparent opacity-0 transition-opacity group-hover:opacity-100`}>
+              Get started →
+            </div>
+          </motion.button>
+        ))}
+      </div>
+
+      <motion.p
+        className="mt-8 text-center text-xs text-muted-foreground/60"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+      >
+        Takes less than a minute · No spam, ever
+      </motion.p>
+    </div>
+  );
+}
 
 export default function OnboardingPage() {
   const router = useRouter();
   const setProfile = useUserStore((s) => s.setProfile);
-  const [stepIndex, setStepIndex] = React.useState(0);
+  const profile = useUserStore((s) => s.profile);
+  const [phase, setPhase] = React.useState<Phase>("role");
+  const [mounted, setMounted] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const [formData, setFormData] = React.useState({
-    fullName: "",
-    branch: "" as any,
-    year: 1,
-    interests: [] as string[],
-    goals: "",
-  });
+  React.useEffect(() => { setMounted(true); }, []);
+  React.useEffect(() => {
+    if (mounted && profile?.onboardedAt) router.push("/dashboard");
+  }, [mounted, profile, router]);
 
-  const currentStep = STEPS[stepIndex];
-  const progress = ((stepIndex + 1) / STEPS.length) * 100;
-
-  const handleNext = async () => {
-    if (currentStep.id === "name" && !formData.fullName.trim()) {
-      toast.error("Please enter your name");
-      return;
-    }
-    if (currentStep.id === "branch" && !formData.branch) {
-      toast.error("Please select your branch");
-      return;
-    }
-    if (currentStep.id === "interests" && formData.interests.length < 3) {
-      toast.error("Please select at least 3 interests");
-      return;
-    }
-    if (currentStep.id === "goals" && !formData.goals.trim()) {
-      toast.error("Please describe your goals");
-      return;
-    }
-
-    if (stepIndex < STEPS.length - 1) {
-      setStepIndex(stepIndex + 1);
-    } else {
-      // Complete onboarding
-      setLoading(true);
-      await new Promise((r) => setTimeout(r, 600));
-
-      setProfile({
-        fullName: formData.fullName,
-        email: `${formData.fullName.toLowerCase().replace(/\s+/g, ".")}@usict.in`,
-        branch: formData.branch,
-        year: formData.year,
-        interests: formData.interests,
-        goals: formData.goals.split("\n").filter(Boolean),
-        avatarSeed: formData.fullName,
-        onboardedAt: new Date().toISOString(),
-      });
-
-      toast.success("Profile created! Redirecting to dashboard...");
-      setTimeout(() => router.push("/dashboard"), 800);
-    }
+  const handleJuniorComplete = async (data: { fullName: string; branch: string; year: number; interests: string[]; goals: string }) => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 600));
+    setProfile({
+      fullName: data.fullName,
+      email: `${data.fullName.toLowerCase().replace(/\s+/g, ".")}@usict.in`,
+      branch: data.branch as any,
+      year: data.year,
+      interests: data.interests,
+      goals: data.goals.split("\n").filter(Boolean),
+      avatarSeed: data.fullName,
+      onboardedAt: new Date().toISOString(),
+      role: "junior",
+    });
+    toast.success("Profile created! Redirecting to dashboard...");
+    setTimeout(() => router.push("/dashboard"), 800);
   };
 
-  const handleBack = () => {
-    if (stepIndex > 0) setStepIndex(stepIndex - 1);
+  const handleSeniorComplete = async (data: SeniorData, score: number) => {
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 600));
+    setProfile({
+      fullName: data.fullName,
+      email: `${data.fullName.toLowerCase().replace(/\s+/g, ".")}@usict.in`,
+      branch: data.branch as any,
+      year: 3,
+      interests: [],
+      goals: [],
+      avatarSeed: data.fullName,
+      onboardedAt: new Date().toISOString(),
+      role: "senior",
+      linkedin: data.linkedin,
+      github: data.github,
+      clubs: data.clubs,
+      cgpa: data.cgpa,
+      hasInternship: data.hasInternship,
+      internshipDetails: data.internshipDetails,
+      seniorScore: score,
+    });
+    toast.success("Profile created! Redirecting to dashboard...");
+    setTimeout(() => router.push("/dashboard"), 800);
   };
 
-  const toggleInterest = (interest: string) => {
-    setFormData((p) => ({
-      ...p,
-      interests: p.interests.includes(interest)
-        ? p.interests.filter((i) => i !== interest)
-        : [...p.interests, interest],
-    }));
-  };
+  if (!mounted) return null;
 
   return (
-    <div className="container mx-auto px-4 py-12 md:py-20">
-      <div className="mx-auto max-w-2xl">
-        {/* Progress */}
-        <div className="mb-8">
-          <div className="mb-2 flex items-center justify-between">
-            <h1 className="font-display text-2xl font-bold md:text-3xl">
-              {currentStep.title}
-            </h1>
-            <span className="text-xs text-muted-foreground">
-              Step {stepIndex + 1} of {STEPS.length}
-            </span>
-          </div>
-          <Progress value={progress} className="h-1.5" />
-        </div>
-
-        {/* Card */}
-        <Card className="border-border/60 bg-card/50 backdrop-blur">
-          <CardHeader>
-            <CardDescription>{currentStep.description}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Name Step */}
-            {currentStep.id === "name" && (
-              <div className="space-y-2">
-                <Label htmlFor="name">Full name</Label>
-                <Input
-                  id="name"
-                  placeholder="Aarav Sharma"
-                  value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData((p) => ({ ...p, fullName: e.target.value }))
-                  }
-                  autoFocus
-                />
-              </div>
-            )}
-
-            {/* Branch Step */}
-            {currentStep.id === "branch" && (
-              <div className="space-y-2">
-                <Label htmlFor="branch">Select your branch</Label>
-                <Select value={formData.branch} onValueChange={(v) =>
-                  setFormData((p) => ({ ...p, branch: v }))
-                }>
-                  <SelectTrigger id="branch">
-                    <SelectValue placeholder="Choose branch" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {BRANCHES.map((b) => (
-                      <SelectItem key={b} value={b}>
-                        {b}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-
-            {/* Year Step */}
-            {currentStep.id === "year" && (
-              <div className="space-y-2">
-                <Label htmlFor="year">Year of study</Label>
-                <Select value={formData.year.toString()} onValueChange={(v) =>
-                  setFormData((p) => ({ ...p, year: parseInt(v) }))
-                }>
-                  <SelectTrigger id="year">
-                    <SelectValue placeholder="Choose year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {YEARS.map((y) => (
-                      <SelectItem key={y} value={y.toString()}>
-                        Year {y}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-
-            {/* Interests Step */}
-            {currentStep.id === "interests" && (
-              <div className="space-y-3">
-                <Label>Select your interests (at least 3)</Label>
-                <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-                  {INTEREST_OPTIONS.map((interest) => (
-                    <button
-                      key={interest}
-                      onClick={() => toggleInterest(interest)}
-                      className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
-                        formData.interests.includes(interest)
-                          ? "border-pulse-500 bg-pulse-500/20 text-pulse-300"
-                          : "border-border/60 bg-card/50 text-muted-foreground hover:bg-accent"
-                      }`}
-                    >
-                      {interest}
-                    </button>
-                  ))}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  {formData.interests.length} selected
-                </p>
-              </div>
-            )}
-
-            {/* Goals Step */}
-            {currentStep.id === "goals" && (
-              <div className="space-y-2">
-                <Label htmlFor="goals">What are your goals?</Label>
-                <textarea
-                  id="goals"
-                  placeholder="E.g., Get an internship at a big tech company&#10;Learn machine learning&#10;Build a startup&#10;Get a scholarship"
-                  value={formData.goals}
-                  onChange={(e) =>
-                    setFormData((p) => ({ ...p, goals: e.target.value }))
-                  }
-                  className="min-h-32 w-full rounded-lg border border-border/60 bg-background/50 px-3 py-2 text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-pulse-500"
-                  autoFocus
-                />
-              </div>
-            )}
-
-            {/* Actions */}
-            <div className="flex gap-3 pt-4">
-              <Button
-                variant="outline"
-                onClick={handleBack}
-                disabled={stepIndex === 0 || loading}
-              >
-                <ChevronLeft className="mr-2 h-4 w-4" />
-                Back
-              </Button>
-              <Button
-                onClick={handleNext}
-                disabled={loading}
-                className="flex-1"
-              >
-                {loading ? "Creating profile..." : stepIndex === STEPS.length - 1 ? "Complete setup" : "Next"}
-                {!loading && stepIndex < STEPS.length - 1 && (
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Step indicators */}
-        <div className="mt-8 flex justify-center gap-2">
-          {STEPS.map((s, i) => (
-            <div
-              key={s.id}
-              className={`h-1.5 flex-1 rounded-full transition-all ${
-                i <= stepIndex ? "bg-pulse-500" : "bg-muted"
-              }`}
-            />
-          ))}
-        </div>
+    <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
+      <AnimatedBackground />
+      <div className="container relative mx-auto px-4 py-10 md:py-16">
+        <AnimatePresence mode="wait">
+          {phase === "role" && (
+            <motion.div key="role" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, x: -80 }} transition={{ duration: 0.4 }}>
+              <RoleSelection onSelect={(role) => setPhase(role)} />
+            </motion.div>
+          )}
+          {phase === "junior" && (
+            <motion.div key="junior" className="mx-auto max-w-xl" initial={{ opacity: 0, x: 80 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+              <JuniorFlow onComplete={handleJuniorComplete} onBack={() => setPhase("role")} />
+            </motion.div>
+          )}
+          {phase === "senior" && (
+            <motion.div key="senior" className="mx-auto max-w-xl" initial={{ opacity: 0, x: 80 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+              <SeniorFlow onComplete={handleSeniorComplete} onBack={() => setPhase("role")} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

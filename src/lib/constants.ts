@@ -44,6 +44,19 @@ export const INTEREST_OPTIONS = [
   "Startups",
 ];
 
+export const CLUB_OPTIONS = [
+  "ACM",
+  "IEEE",
+  "Robotics Club",
+  "Coding Club",
+  "Drama Club",
+  "E-Cell",
+  "Debate Society",
+  "Photography Club",
+  "Music Society",
+  "None",
+] as const;
+
 export const NAV_LINKS = [
   { href: "/dashboard", label: "Home" },
   {
