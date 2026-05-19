@@ -15,6 +15,7 @@ import { MentorCard } from "@/components/mentor-card";
 import { QuestionCard } from "@/components/question-card";
 import { MOCK_OPPORTUNITIES, MOCK_SENIORS, MOCK_NOTIFICATIONS } from "@/lib/mock";
 import { getInitials, daysUntil } from "@/lib/utils";
+import { ApplicationTracker } from "@/components/application-tracker";
 
 // NOTE: `metadata` cannot be exported from a client component (this file uses
 // "use client"). The page title for /dashboard is set via `app/dashboard/layout.tsx`.
@@ -144,6 +145,8 @@ export default function DashboardPage() {
 
         {/* Sidebar */}
         <div className="space-y-8">
+          {/* Application Tracker */}
+          <ApplicationTracker />
           {/* Notifications */}
           <section>
             <h3 className="mb-3 font-display text-lg font-bold">Notifications</h3>
