@@ -6,6 +6,7 @@ import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Splash } from "@/components/splash";
+import { ChatWidget } from "@/components/chat-widget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -61,6 +62,7 @@ export default function RootLayout({
             <SiteHeader />
             <main className="flex-1">{children}</main>
             <SiteFooter />
+            <ChatWidget />
           </div>
         </Providers>
       </body>
