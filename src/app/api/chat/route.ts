@@ -22,10 +22,10 @@ export async function POST(req: Request) {
     });
 
     const dbContext = questions.map(q => `
-Question by ${q.author.fullName}: ${q.title}
+Question by ${q.author?.fullName ?? 'Anonymous'}: ${q.title}
 ${q.content}
 Answers:
-${q.answers.map(a => `- ${a.author.fullName} (${a.author.role}): ${a.content}`).join('\n')}
+${q.answers.map(a => `- ${a.author?.fullName ?? 'Anonymous'} (${a.author?.role ?? 'unknown'}): ${a.content}`).join('\n')}
     `).join('\n\n');
 
     // 2. Format static data
