@@ -63,9 +63,16 @@ const config: Config = {
         },
       },
       borderRadius: {
+        "3xl": "1.5rem",
+        "2xl": "1.25rem",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        "glass": "0 8px 32px rgba(99, 102, 241, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04)",
+        "glass-lg": "0 16px 48px rgba(99, 102, 241, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04)",
+        "glass-dark": "0 8px 32px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)",
       },
       keyframes: {
         "accordion-down": {
@@ -92,6 +99,38 @@ const config: Config = {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
         },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "0.4", transform: "scale(1)" },
+          "50%": { opacity: "0.8", transform: "scale(1.15)" },
+        },
+        "slide-up": {
+          "0%": { transform: "translateY(10px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "slide-down": {
+          "0%": { transform: "translateY(-10px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "slide-in-right": {
+          "0%": { transform: "translateX(20px)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        "scale-in": {
+          "0%": { transform: "scale(0.95)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+        "bounce-soft": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
+        },
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "border-glow": {
+          "0%, 100%": { borderColor: "rgba(58, 96, 255, 0.2)" },
+          "50%": { borderColor: "rgba(58, 96, 255, 0.5)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -100,6 +139,14 @@ const config: Config = {
         shimmer: "shimmer 2s linear infinite",
         float: "float 4s ease-in-out infinite",
         "gradient-x": "gradient-x 6s ease infinite",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        "slide-up": "slide-up 0.4s ease-out",
+        "slide-down": "slide-down 0.4s ease-out",
+        "slide-in-right": "slide-in-right 0.4s ease-out",
+        "scale-in": "scale-in 0.3s ease-out",
+        "bounce-soft": "bounce-soft 2s ease-in-out infinite",
+        "spin-slow": "spin-slow 8s linear infinite",
+        "border-glow": "border-glow 2s ease-in-out infinite",
       },
       backgroundImage: {
         "grid-pattern":

@@ -39,8 +39,9 @@ export function SiteFooter() {
   if (pathname === "/onboarding") return null;
 
   return (
-    <footer className="relative mt-24 border-t bg-card/30">
+    <footer className="relative mt-24 border-t bg-card/30 backdrop-blur-sm">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pulse-500/40 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-pulse-500/[0.03] to-transparent dark:from-pulse-500/[0.05]" />
       <div className="container py-12">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
@@ -53,21 +54,21 @@ export function SiteFooter() {
               <Link
                 href="#"
                 aria-label="GitHub"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground transition-all duration-200 hover:text-foreground hover:scale-125 hover:-translate-y-0.5"
               >
                 <Github className="h-4 w-4" />
               </Link>
               <Link
                 href="#"
                 aria-label="LinkedIn"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground transition-all duration-200 hover:text-blue-500 hover:scale-125 hover:-translate-y-0.5"
               >
                 <Linkedin className="h-4 w-4" />
               </Link>
               <Link
                 href="mailto:hello@usict.pulse"
                 aria-label="Email"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground transition-all duration-200 hover:text-pulse-500 hover:scale-125 hover:-translate-y-0.5"
               >
                 <Mail className="h-4 w-4" />
               </Link>
@@ -82,7 +83,7 @@ export function SiteFooter() {
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="inline-block text-sm text-muted-foreground transition-all duration-200 hover:text-foreground hover:translate-x-1"
                     >
                       {l.label}
                     </Link>

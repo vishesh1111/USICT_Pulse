@@ -42,6 +42,21 @@ export function Splash() {
     >
       <div className="absolute inset-0 grid-bg opacity-50" />
       <div className="absolute inset-0 bg-radial-fade" />
+      <div className="absolute inset-0 bg-mesh opacity-40" />
+
+      {/* Floating ambient dots */}
+      {Array.from({ length: 12 }).map((_, i) => (
+        <div
+          key={i}
+          className="absolute h-1 w-1 rounded-full bg-pulse-500/30 animate-float"
+          style={{
+            left: `${15 + Math.random() * 70}%`,
+            top: `${15 + Math.random() * 70}%`,
+            animationDelay: `${i * 0.3}s`,
+            animationDuration: `${3 + Math.random() * 4}s`,
+          }}
+        />
+      ))}
 
       <div className="relative flex flex-col items-center gap-6">
         <div className="relative">

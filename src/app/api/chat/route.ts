@@ -69,11 +69,9 @@ Address the user by name occasionally.
 
     // 4. Generate & Stream
     const result = await streamText({
-      model: google('gemini-3.1-pro'),
-      messages: [
-        { role: 'system', content: systemPrompt },
-        ...messages,
-      ],
+      model: google('gemini-2.5-flash'),
+      system: systemPrompt,
+      messages,
     });
 
     return result.toTextStreamResponse();

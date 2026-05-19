@@ -60,7 +60,7 @@ export default function RootLayout({
           <Splash />
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 animate-slide-up">{children}</main>
             <SiteFooter />
             <ChatWidget />
           </div>

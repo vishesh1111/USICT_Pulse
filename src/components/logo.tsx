@@ -9,8 +9,8 @@ interface LogoProps {
 
 export function Logo({ className, href = "/", showWordmark = true }: LogoProps) {
   const inner = (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      <span className="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-pulse-500 via-pulse-600 to-fuchsia-600 shadow-lg shadow-pulse-500/30">
+    <span className={cn("group inline-flex items-center gap-2.5", className)}>
+      <span className="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-pulse-500 via-pulse-600 to-fuchsia-600 shadow-lg shadow-pulse-500/30 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-pulse-500/50 group-hover:scale-110">
         {/* heartbeat / pulse glyph */}
         <svg
           viewBox="0 0 24 24"
@@ -19,14 +19,14 @@ export function Logo({ className, href = "/", showWordmark = true }: LogoProps) 
           strokeWidth="2.4"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="h-4 w-4"
+          className="h-4 w-4 transition-transform duration-300 group-hover:scale-110"
         >
           <path d="M2 12h4l2-6 4 12 2-6 2 3h6" />
         </svg>
         <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/20" />
       </span>
       {showWordmark && (
-        <span className="font-display text-base font-bold tracking-tight">
+        <span className="font-display text-base font-bold tracking-tight transition-colors duration-200">
           USICT{" "}
           <span className="bg-gradient-to-r from-pulse-500 to-fuchsia-500 bg-clip-text text-transparent">
             PULSE
