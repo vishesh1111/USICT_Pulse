@@ -230,9 +230,9 @@ The build command (`prisma generate && next build`) is already set in `package.j
 
 > **Note:** The chat API route uses `maxDuration = 60`, which requires Vercel **Pro** plan. On Hobby plan, change it to `10` in `src/app/api/chat/route.ts`.
 
-## Roadmap
+## Feautres:-
 
-- [ ] Real-time chat between mentor and mentee (Supabase Realtime)
+- [ ] Real-time chat between mentor and mentee/Senior (Supabase Realtime)
 - [ ] OAuth login (Google + GitHub)
 - [ ] Push notifications for deadlines (Web Push API)
 - [ ] Calendar export for opportunities (.ics)
@@ -269,7 +269,7 @@ Built by students, for students. Free to use and adapt for your own college comm
 
 <div align="center">
 
-**Made with ❤️ at USICT**
+
 
 [⬆ Back to top](#usict-pulse)
 
