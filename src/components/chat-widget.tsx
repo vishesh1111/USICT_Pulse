@@ -176,21 +176,21 @@ export function ChatWidget() {
         )}
       </AnimatePresence>
 
-      <motion.button
-        className="fixed bottom-4 right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-pulse-500 to-fuchsia-600 shadow-xl shadow-pulse-500/30 transition-transform hover:scale-105 active:scale-95 sm:bottom-8 sm:right-8 group"
-        onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <MessageSquare className="h-6 w-6 text-white group-hover:hidden" />
-        <Bot className="h-6 w-6 text-white hidden group-hover:block" />
-        {/* Unread dot */}
-        {!isOpen && (
-          <span className="absolute top-0 right-0 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 border-2 border-background">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-          </span>
-        )}
-      </motion.button>
+      <div className="fixed bottom-4 right-4 z-40 sm:bottom-8 sm:right-8">
+        {/* Automatic background glowing animation */}
+        <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-pulse-500 to-fuchsia-500 opacity-40 blur-lg animate-pulse" />
+        <div className="absolute inset-0 rounded-full bg-pulse-500 animate-ping opacity-20" />
+        
+        <motion.button
+          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-card/95 backdrop-blur-xl border border-pulse-500/30 shadow-xl group overflow-hidden transition-colors hover:border-pulse-500/50"
+          onClick={() => setIsOpen(!isOpen)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <MessageSquare className="h-6 w-6 text-pulse-400 group-hover:hidden transition-all duration-300 group-hover:scale-110" />
+          <Bot className="h-6 w-6 text-fuchsia-400 hidden group-hover:block transition-all duration-300 group-hover:scale-110" />
+        </motion.button>
+      </div>
     </>
   );
 }

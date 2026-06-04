@@ -122,17 +122,27 @@ export function OpportunityCard({ opportunity, compact }: OpportunityCardProps) 
           </>
         )}
 
-        <Button
-          asChild
-          size="sm"
-          disabled={isClosed}
-          className="w-full"
-          variant={isClosed ? "secondary" : "default"}
-        >
-          <a href={isClosed ? "#" : opportunity.applyUrl} target="_blank" rel="noopener noreferrer">
-            {isClosed ? "Closed" : "Apply now"}
-          </a>
-        </Button>
+        {(!opportunity.applyUrl || isClosed) ? (
+          <Button
+            size="sm"
+            disabled
+            className="w-full"
+            variant="secondary"
+          >
+            {isClosed ? "Closed" : "Apply Link Unavailable"}
+          </Button>
+        ) : (
+          <Button
+            asChild
+            size="sm"
+            className="w-full"
+            variant="default"
+          >
+            <a href={opportunity.applyUrl} target="_blank" rel="noopener noreferrer">
+              Apply now
+            </a>
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

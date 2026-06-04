@@ -1,8 +1,19 @@
 import { streamText } from 'ai';
 import { google } from '@ai-sdk/google';
-import { prisma } from "@/lib/prisma";
 import { MOCK_OPPORTUNITIES } from "@/lib/mock/opportunities";
 import { MOCK_RESOURCES } from "@/lib/mock/resources";
+import { mockQuestions } from "@/lib/mock/ask";
+
+// Helper: try to get prisma, return null if DATABASE_URL is missing
+function getPrisma() {
+  try {
+    if (!process.env.DATABASE_URL) return null;
+    const { prisma } = require("@/lib/prisma");
+    return prisma;
+  } catch {
+    return null;
+  }
+}
 
 // Set maximum duration for serverless function (10s for Hobby, 60s for Pro)
 export const maxDuration = 60;
@@ -11,15 +22,28 @@ export async function POST(req: Request) {
   try {
     const { messages, userProfile } = await req.json();
 
-    // 1. Fetch live DB context
-    const questions = await prisma.question.findMany({
-      include: {
-        author: { select: { fullName: true, role: true } },
-        answers: { include: { author: { select: { fullName: true, role: true } } } }
-      },
-      take: 15,
-      orderBy: { createdAt: 'desc' }
-    });
+    // 1. Fetch live DB context or fallback to mock
+    let questions: any[] = [];
+    const prisma = getPrisma();
+    
+    if (prisma) {
+      try {
+        questions = await prisma.question.findMany({
+          include: {
+            author: { select: { fullName: true, role: true } },
+            answers: { include: { author: { select: { fullName: true, role: true } } } }
+          },
+          take: 15,
+          orderBy: { createdAt: 'desc' }
+        });
+      } catch (dbError) {
+        console.warn("[API /chat] Database error, using mock questions");
+      }
+    }
+    
+    if (questions.length === 0) {
+      questions = mockQuestions;
+    }
 
     const dbContext = questions.map(q => `
 Question by ${q.author?.fullName ?? 'Anonymous'}: ${q.title}

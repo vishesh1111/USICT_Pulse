@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Splash } from "@/components/splash";
 import { ChatWidget } from "@/components/chat-widget";
+import { RouteGuard } from "@/components/route-guard";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -60,7 +61,9 @@ export default function RootLayout({
           <Splash />
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="flex-1 animate-slide-up">{children}</main>
+            <main className="flex-1 animate-slide-up">
+              <RouteGuard>{children}</RouteGuard>
+            </main>
             <SiteFooter />
             <ChatWidget />
           </div>

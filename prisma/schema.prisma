@@ -109,6 +109,7 @@ model User {
   resumes          Resume[]
   connectionsFrom  Connection[]    @relation("From")
   connectionsTo    Connection[]    @relation("To")
+  opportunities    Opportunity[]   @relation("PostedOpportunities")
 
   @@index([branch, year])
 }
@@ -164,7 +165,10 @@ model Opportunity {
   stipend     String?
   location    String?
   featured    Boolean           @default(false)
+  authorId    String?
   createdAt   DateTime          @default(now())
+
+  author      User?             @relation("PostedOpportunities", fields: [authorId], references: [id], onDelete: SetNull)
 
   @@index([type, status])
 }
@@ -178,6 +182,7 @@ model Question {
   tags        String[] @default([])
   anonymous   Boolean  @default(true)
   helpfulCount Int     @default(0)
+  isHidden    Boolean  @default(false)
   createdAt   DateTime @default(now())
 
   author  User?    @relation("AskedBy", fields: [authorId], references: [id], onDelete: SetNull)
@@ -211,6 +216,7 @@ model Resource {
   usefulness  Float           @default(0)
   votes       Int             @default(0)
   tags        String[]        @default([])
+  isHidden    Boolean         @default(false)
   createdAt   DateTime        @default(now())
 
   recommendedBy User @relation(fields: [recommendedById], references: [id], onDelete: Cascade)

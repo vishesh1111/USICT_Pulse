@@ -18,6 +18,7 @@ import {
   FloatingParticles,
   GlowPulse,
 } from "@/components/motion-primitives";
+import { NeuralParticles } from "@/components/ui/neural-particles";
 
 const FEATURES = [
   {
@@ -58,12 +59,6 @@ const FEATURES = [
   },
 ];
 
-const STATS = [
-  { value: 500, suffix: "+", label: "Active students" },
-  { value: 120, suffix: "+", label: "Mentors" },
-  { value: 80, suffix: "+", label: "Live opportunities" },
-  { value: 5, suffix: "", label: "Branches" },
-];
 
 export default function HomePage() {
   const router = useRouter();
@@ -88,16 +83,19 @@ export default function HomePage() {
     <div className="relative">
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 grid-bg opacity-40" />
-        <div className="absolute inset-0 bg-radial-fade" />
-        <div className="absolute inset-0 bg-mesh opacity-60" />
+        <div className="absolute inset-0 z-0 hidden dark:block">
+          <NeuralParticles className="w-full h-full" />
+        </div>
+        <div className="absolute inset-0 grid-bg opacity-40 z-0" />
+        <div className="absolute inset-0 bg-radial-fade z-0" />
+        <div className="absolute inset-0 bg-mesh opacity-60 z-0" />
         <FloatingParticles count={25} />
 
         {/* Ambient glow orbs */}
-        <GlowPulse className="-left-20 -top-20 h-60 w-60" color="pulse" />
-        <GlowPulse className="-right-20 top-40 h-48 w-48" color="fuchsia" />
+        <GlowPulse className="-left-20 -top-20 h-60 w-60 z-0" color="pulse" />
+        <GlowPulse className="-right-20 top-40 h-48 w-48 z-0" color="fuchsia" />
 
-        <div className="container relative mx-auto px-4 py-20 md:py-28 lg:py-32">
+        <div className="container relative z-10 mx-auto px-4 py-20 md:py-28 lg:py-32">
           <div className="mx-auto max-w-3xl text-center">
             <motion.div
               initial={{ opacity: 0, y: -20, scale: 0.9 }}
@@ -146,24 +144,6 @@ export default function HomePage() {
               </Button>
             </motion.div>
 
-            {/* Stats with animated counters */}
-            <motion.div
-              className="mx-auto mt-16 grid max-w-2xl grid-cols-2 gap-6 md:grid-cols-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              {STATS.map((s) => (
-                <div key={s.label} className="text-center">
-                  <div className="font-display text-2xl font-bold md:text-3xl">
-                    <AnimatedCounter target={s.value} suffix={s.suffix} duration={1.5} />
-                  </div>
-                  <div className="mt-1 text-xs text-muted-foreground md:text-sm">
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
           </div>
         </div>
       </section>
@@ -238,27 +218,34 @@ export default function HomePage() {
       {/* Final CTA */}
       <section className="container mx-auto px-4 pb-24 pt-8">
         <FadeIn direction="up" delay={0.2}>
-          <Card className="relative overflow-hidden border-pulse-500/20 bg-gradient-to-br from-pulse-500/10 via-fuchsia-500/5 to-transparent animate-border-glow">
-            <div className="absolute inset-0 bg-mesh opacity-40" />
-            <GlowPulse className="left-1/4 top-0 h-40 w-40" color="pulse" />
-            <GlowPulse className="right-1/4 bottom-0 h-32 w-32" color="fuchsia" />
-            <CardContent className="relative flex flex-col items-center justify-between gap-6 p-10 text-center md:flex-row md:text-left">
-              <div>
-                <h3 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
-                  Ready to feel the pulse?
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground md:text-base">
-                  Set up your profile in under a minute. No spam, no ads — just signal.
-                </p>
-              </div>
-              <Button asChild size="xl">
-                <Link href="/onboarding">
-                  Get started
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="relative mx-auto max-w-5xl overflow-hidden rounded-[24px] p-[2px]">
+            {/* The animated tracing light beam */}
+            <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,transparent_75%,#3a60ff_85%,#d946ef_100%)]" />
+            
+            <Card className="relative overflow-hidden rounded-[22px] border-0 bg-background/95 backdrop-blur-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-pulse-500/10 via-fuchsia-500/5 to-transparent" />
+              <div className="absolute inset-0 bg-mesh opacity-40" />
+              <GlowPulse className="left-1/4 top-0 h-40 w-40" color="pulse" />
+              <GlowPulse className="right-1/4 bottom-0 h-32 w-32" color="fuchsia" />
+              
+              <CardContent className="relative flex flex-col items-center justify-between gap-6 p-10 text-center md:flex-row md:text-left">
+                <div>
+                  <h3 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+                    Ready to feel the pulse?
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground md:text-base">
+                    Set up your profile in under a minute. No spam, no ads — just signal.
+                  </p>
+                </div>
+                <Button asChild size="xl" className="shadow-[0_0_20px_rgba(58,96,255,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(58,96,255,0.6)]">
+                  <Link href="/onboarding">
+                    Get started
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </FadeIn>
       </section>
     </div>

@@ -1,7 +1,7 @@
 import type { MockUser } from "./types";
 import { getAvatarUrl } from "@/lib/utils";
 
-export const MOCK_SENIORS: MockUser[] = [
+export const INITIAL_SENIORS: MockUser[] = [
   {
     id: "u-sen-1",
     email: "aarav.sharma@usict.in",
@@ -19,6 +19,7 @@ export const MOCK_SENIORS: MockUser[] = [
     mentoringTopics: ["Placements", "Open Source", "Full Stack"],
     linkedin: "https://linkedin.com/in/aaravsharma",
     github: "https://github.com/aaravsharma",
+    seniorScore: 92,
   },
   {
     id: "u-sen-2",
@@ -35,6 +36,7 @@ export const MOCK_SENIORS: MockUser[] = [
     bio: "Building ML systems. Happy to talk research, internships and Kaggle.",
     isMentor: true,
     mentoringTopics: ["ML/AI", "Research", "Higher Studies"],
+    seniorScore: 85,
   },
   {
     id: "u-sen-3",
@@ -51,86 +53,10 @@ export const MOCK_SENIORS: MockUser[] = [
     bio: "CP enjoyer. Can help juniors crack DSA rounds.",
     isMentor: true,
     mentoringTopics: ["DSA", "CP", "Interviews"],
-  },
-  {
-    id: "u-sen-4",
-    email: "sneha.kapoor@usict.in",
-    fullName: "Sneha Kapoor",
-    avatarUrl: getAvatarUrl("Sneha Kapoor"),
-    role: "SENIOR",
-    branch: "CSEDS",
-    year: 3,
-    cgpa: 8.9,
-    interests: ["Data Science", "Product Management", "Analytics"],
-    skills: ["Python", "Tableau", "SQL", "Looker"],
-    achievements: ["Data Analyst intern @ Swiggy"],
-    bio: "Bridging data and product. Ask me about PM internships.",
-    isMentor: true,
-    mentoringTopics: ["Product", "Data", "Internships"],
-  },
-  {
-    id: "u-sen-5",
-    email: "kabir.singh@usict.in",
-    fullName: "Kabir Singh",
-    avatarUrl: getAvatarUrl("Kabir Singh"),
-    role: "SENIOR",
-    branch: "ECE",
-    year: 4,
-    cgpa: 8.4,
-    interests: ["IoT & Embedded", "Robotics", "Hardware"],
-    skills: ["C", "Embedded C", "Arduino", "ROS"],
-    achievements: ["Smart India Hackathon Winner"],
-    bio: "Hardware-software bridge. Working on autonomous drones.",
-    isMentor: true,
-    mentoringTopics: ["Hardware", "Hackathons", "Core ECE"],
-  },
-  {
-    id: "u-sen-6",
-    email: "diya.malhotra@usict.in",
-    fullName: "Diya Malhotra",
-    avatarUrl: getAvatarUrl("Diya Malhotra"),
-    role: "SENIOR",
-    branch: "CSE",
-    year: 3,
-    cgpa: 9.0,
-    interests: ["UI/UX Design", "Web Development", "Startups"],
-    skills: ["Figma", "React", "Framer Motion", "Tailwind"],
-    achievements: ["Design intern @ Razorpay"],
-    bio: "Designer-developer. Will roast your portfolio in a nice way.",
-    isMentor: true,
-    mentoringTopics: ["Design", "Frontend", "Portfolios"],
-  },
-  {
-    id: "u-sen-7",
-    email: "arnav.kumar@usict.in",
-    fullName: "Arnav Kumar",
-    avatarUrl: getAvatarUrl("Arnav Kumar"),
-    role: "SENIOR",
-    branch: "CSEAI",
-    year: 3,
-    cgpa: 8.7,
-    interests: ["AI/ML", "Cloud Computing", "DevOps"],
-    skills: ["TensorFlow", "Docker", "GCP", "Kubernetes"],
-    achievements: ["ML intern @ Sprinklr"],
-    isMentor: true,
-    mentoringTopics: ["MLOps", "Cloud", "Internships"],
-  },
-  {
-    id: "u-sen-8",
-    email: "myra.jain@usict.in",
-    fullName: "Myra Jain",
-    avatarUrl: getAvatarUrl("Myra Jain"),
-    role: "SENIOR",
-    branch: "IT",
-    year: 4,
-    cgpa: 9.2,
-    interests: ["Cyber Security", "Cloud Computing"],
-    skills: ["Burp Suite", "Python", "Linux", "AWS"],
-    achievements: ["Bug bounty hunter — 12 CVEs"],
-    isMentor: true,
-    mentoringTopics: ["Security", "CTFs", "Career in Cyber"],
+    seniorScore: 78,
   },
 ];
+
 
 export const MOCK_ALUMNI: MockUser[] = [
   {

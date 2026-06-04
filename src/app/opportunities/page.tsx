@@ -15,8 +15,9 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { OpportunityCard } from "@/components/opportunity-card";
-import { MOCK_OPPORTUNITIES } from "@/lib/mock";
 import { BRANCHES } from "@/lib/constants";
+import { CreateOpportunityDialog } from "@/components/create-opportunity-dialog";
+import { Opportunity } from "@prisma/client";
 
 // NOTE: `metadata` cannot be exported from a client component. Title is set via
 // `app/opportunities/layout.tsx`.
@@ -41,9 +42,31 @@ function OpportunitiesContent() {
     }
   }, [searchParams]);
 
-  const filteredOpportunities = MOCK_OPPORTUNITIES.filter((opp) => {
+  const [opportunities, setOpportunities] = React.useState<Opportunity[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  const fetchOpportunities = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/opportunities");
+      if (res.ok) {
+        const data = await res.json();
+        setOpportunities(data.opportunities || []);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchOpportunities();
+  }, []);
+
+  const filteredOpportunities = opportunities.filter((opp: any) => {
     if (typeFilter !== "all" && opp.type !== typeFilter) return false;
-    if (branchFilter !== "all" && !opp.branches.includes(branchFilter as any)) return false;
+    if (branchFilter !== "all" && !opp.branches?.includes(branchFilter as any)) return false;
     if (statusFilter !== "all" && opp.status !== statusFilter) return false;
     return true;
   });
@@ -192,9 +215,12 @@ function OpportunitiesContent() {
           </Card>
         </div>
 
-        {/* Results */}
         <div className="lg:col-span-3">
-          {filteredOpportunities.length > 0 ? (
+          {loading ? (
+            <div className="flex h-40 items-center justify-center">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-pulse-500 border-t-transparent"></div>
+            </div>
+          ) : filteredOpportunities.length > 0 ? (
             <div className="grid gap-4 md:grid-cols-2">
               {filteredOpportunities.map((opp) => (
                 <OpportunityCard key={opp.id} opportunity={opp} />
@@ -212,6 +238,8 @@ function OpportunitiesContent() {
           )}
         </div>
       </div>
+
+      <CreateOpportunityDialog onSuccess={fetchOpportunities} />
     </div>
   );
 }

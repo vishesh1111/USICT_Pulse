@@ -32,10 +32,10 @@ interface QuestionData {
       seniorScore: number | null;
       branch: string;
       avatarUrl: string | null;
-      role: string;
     };
   }[];
   _count: { answers: number };
+  isHidden?: boolean;
 }
 
 export default function AskPage() {
@@ -46,6 +46,7 @@ export default function AskPage() {
   const [askOpen, setAskOpen] = React.useState(false);
   const [expandedId, setExpandedId] = React.useState<string | null>(null);
   const [answeringId, setAnsweringId] = React.useState<string | null>(null);
+  const [showHidden, setShowHidden] = React.useState(false);
 
   const fetchQuestions = React.useCallback(async () => {
     try {
@@ -62,6 +63,29 @@ export default function AskPage() {
   React.useEffect(() => {
     fetchQuestions();
   }, [fetchQuestions]);
+
+  const handleUpvote = async (id: string) => {
+    // Optimistic update
+    setQuestions((prev) =>
+      prev.map((q) => (q.id === id ? { ...q, helpfulCount: q.helpfulCount + 1 } : q))
+    );
+    await fetch(`/api/questions/${id}/upvote`, { method: "POST" });
+  };
+
+  const handleHide = async (id: string) => {
+    setQuestions(prev => prev.map(q => q.id === id ? { ...q, isHidden: true } : q));
+    await fetch(`/api/questions/${id}/hide`, { method: "POST", body: JSON.stringify({ hide: true }) });
+  };
+
+  const handleRestore = async (id: string) => {
+    setQuestions(prev => prev.map(q => q.id === id ? { ...q, isHidden: false } : q));
+    await fetch(`/api/questions/${id}/hide`, { method: "POST", body: JSON.stringify({ hide: false }) });
+  };
+
+  const hiddenCount = questions.filter(q => q.isHidden).length;
+  const displayQuestions = questions.filter((q) =>
+    isSenior && showHidden ? q.isHidden : !q.isHidden
+  );
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12 max-w-4xl">
@@ -83,10 +107,20 @@ export default function AskPage() {
         </div>
         <div className="flex items-center gap-2">
           {isSenior ? (
-            <Badge className="bg-purple-500/15 text-purple-400 border-purple-500/30 gap-1.5 py-1.5 px-3">
-              <Shield className="h-3.5 w-3.5" />
-              Senior Mentor
-            </Badge>
+            <>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowHidden(!showHidden)}
+                className={`border-purple-500/30 text-purple-400 hover:bg-purple-500/10 ${showHidden ? 'bg-purple-500/10' : ''}`}
+              >
+                {showHidden ? "Back to Feed" : `View Hidden (${hiddenCount})`}
+              </Button>
+              <Badge className="bg-purple-500/15 text-purple-400 border-purple-500/30 gap-1.5 py-1.5 px-3">
+                <Shield className="h-3.5 w-3.5" />
+                Senior Mentor
+              </Badge>
+            </>
           ) : (
             <Button
               onClick={() => setAskOpen(true)}
@@ -131,7 +165,7 @@ export default function AskPage() {
       )}
 
       {/* Empty state */}
-      {!loading && questions.length === 0 && (
+      {!loading && displayQuestions.length === 0 && (
         <motion.div
           className="rounded-2xl border border-dashed border-border/60 bg-card/20 p-12 text-center"
           initial={{ opacity: 0 }}
@@ -158,7 +192,7 @@ export default function AskPage() {
       {/* Questions list */}
       <div className="space-y-4">
         <AnimatePresence>
-          {questions.map((q, idx) => (
+          {displayQuestions.map((q, idx) => (
             <motion.div
               key={q.id}
               initial={{ opacity: 0, y: 20 }}
@@ -173,6 +207,7 @@ export default function AskPage() {
                       <Button
                         variant="ghost"
                         size="icon"
+                        onClick={() => handleUpvote(q.id)}
                         className="h-8 w-8 hover:text-purple-500 hover:bg-purple-500/10"
                       >
                         <ThumbsUp className="h-4 w-4" />
@@ -226,17 +261,38 @@ export default function AskPage() {
                         </button>
 
                         {isSenior && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              setAnsweringId(answeringId === q.id ? null : q.id)
-                            }
-                            className="border-purple-500/30 text-purple-400 hover:bg-purple-500/10"
-                          >
-                            <MessageCircle className="mr-1.5 h-3.5 w-3.5" />
-                            Answer
-                          </Button>
+                          <div className="flex gap-2">
+                            {q.isHidden ? (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => handleRestore(q.id)}
+                                className="text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10"
+                              >
+                                Restore
+                              </Button>
+                            ) : (
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => handleHide(q.id)}
+                                className="text-muted-foreground hover:text-red-400 hover:bg-red-500/10"
+                              >
+                                Hide
+                              </Button>
+                            )}
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() =>
+                                setAnsweringId(answeringId === q.id ? null : q.id)
+                              }
+                              className="border-purple-500/30 text-purple-400 hover:bg-purple-500/10"
+                            >
+                              <MessageCircle className="mr-1.5 h-3.5 w-3.5" />
+                              Answer
+                            </Button>
+                          </div>
                         )}
                       </div>
 

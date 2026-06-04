@@ -90,12 +90,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20%20%20%20Yogesh%20Singh&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2],
     "rating": 5,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -113,12 +108,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20B.%20V.%20R.%20Reddy&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3],
     "rating": 3.5,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -136,12 +126,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Navin%20Rajpal&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2, 3],
     "rating": 3.1,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -159,12 +144,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Chandra%20Shekhar%20Rai&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3, 4],
     "rating": 4.6,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -182,12 +162,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20(Mrs.)%20Arvinder%20Kaur&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2],
     "rating": 4.8,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -205,12 +180,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Pravin%20Chandra&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3],
     "rating": 4.4,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -228,12 +198,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20(Ms.)%20Anjana%20Gosain&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2, 3],
     "rating": 3.5,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -251,12 +216,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Udayan%20Ghose&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2],
     "rating": 4.8,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -274,12 +234,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Bharti%20Suri&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [3, 4],
     "rating": 3.8,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -297,12 +252,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Amit%20Prakash%20Singh&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2],
     "rating": 3.4,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -320,12 +270,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Pushpendra%20Singh%20Bharti&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2],
     "rating": 3.8,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -343,12 +288,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20R.%20Rama%20Kishore&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [3],
     "rating": 4.8,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -366,12 +306,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Anju%20Saha&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3],
     "rating": 3.6,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -389,12 +324,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Ravindra%20Kr.%20Purwar&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [3, 4],
     "rating": 4.9,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -412,12 +342,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Virendra%20Prasad%20Vishwakarma&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3, 4],
     "rating": 3.8,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -435,12 +360,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Anurag%20Jain&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1],
     "rating": 3.8,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -458,12 +378,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Sanjay%20Kr.%20Malik&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3],
     "rating": 4.7,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -481,12 +396,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Vandana%20Nath&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1],
     "rating": 4.9,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -504,12 +414,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Sartaj%20Singh%20Sodhi&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2, 3],
     "rating": 3.1,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -527,12 +432,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Rinkaj%20Goyal&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2, 3],
     "rating": 4,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -550,12 +450,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Ashish%20Payal&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [3],
     "rating": 4.7,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -573,12 +468,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Jyotsna%20yadav&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1],
     "rating": 4.5,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -596,12 +486,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Rameshwar%20Lal%20Ujjwal&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3, 4],
     "rating": 4.6,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -619,12 +504,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Maddali%20Bala%20Krishna&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3, 4],
     "rating": 4.2,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -642,12 +522,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Anuradha%20Chug&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3],
     "rating": 4.3,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -665,12 +540,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Kamaldeep%20Kaur&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [3],
     "rating": 4.2,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -688,12 +558,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Associate Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Reena%20Gupta&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3],
     "rating": 4.3,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -711,12 +576,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Assoicate Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Mansi%20Jhamb&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [4],
     "rating": 3.2,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -734,12 +594,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Associate Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Jaspreeti%20Singh&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3],
     "rating": 4,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -757,12 +612,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Associate Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Ruchi%20Sehrawat&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2, 3],
     "rating": 4,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -780,12 +630,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Assistant Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Ms.%20Priyanka%20Bhutani&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [3, 4],
     "rating": 3.1,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -803,12 +648,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Assistant Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Manoj%20Kumar%20Satyarthi&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [4],
     "rating": 3.3,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -826,12 +666,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Assistant Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Sh.%20Shiv%20Ram%20Meena&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3],
     "rating": 3.9,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -849,12 +684,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Assistant Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Ms.%20Shweta%20Dabas&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [3, 4],
     "rating": 3.5,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -872,12 +702,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Assistant Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Dr.%20Chakresh%20Kumar&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [1, 2],
     "rating": 4.8,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -895,12 +720,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Assistant Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Ms.%20Priyanka%20Chaudhary&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3, 4],
     "rating": 4.3,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -918,12 +738,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "Assistant Professor",
     "photoUrl": "https://ui-avatars.com/api/?name=Sh.%20Parijat%20Mathur&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2, 3, 4],
     "rating": 4.9,
     "internalsTrend": "Average",
     "difficulty": "Moderate",
@@ -941,12 +756,7 @@ export const MOCK_TEACHERS: MockTeacher[] = [
     "designation": "-",
     "photoUrl": "https://ui-avatars.com/api/?name=-&background=random",
     "bio": "Details imported from the USICT directory.",
-    "yearTaught": [
-      1,
-      2,
-      3,
-      4
-    ],
+    "yearTaught": [2],
     "rating": 3.2,
     "internalsTrend": "Average",
     "difficulty": "Moderate",

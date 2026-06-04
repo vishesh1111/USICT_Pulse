@@ -11,6 +11,7 @@ import { JuniorFlow } from "@/components/onboarding-junior";
 import { SeniorFlow, type SeniorData } from "@/components/onboarding-senior";
 import { toast } from "sonner";
 import { sendWelcomeEmail, isEmailJSConfigured } from "@/lib/emailjs";
+import { useNotificationStore } from "@/lib/notification-store";
 
 type Phase = "role" | "junior" | "senior";
 
@@ -226,13 +227,38 @@ export default function OnboardingPage() {
         seniorScore: score,
         avatarSeed: data.fullName,
       }),
-    }).catch(console.error);
+    })
+      .then(async () => {
+        try {
+          const res = await fetch(`/api/users?leaderboard=true&t=${Date.now()}`, { cache: "no-store" });
+          const leaderboardData = await res.json();
+          const rank = leaderboardData.seniors.findIndex((s: any) => s.email === data.email) + 1;
+          
+          if (rank > 0) {
+            useNotificationStore.getState().addNotification({
+              id: `rank-${Date.now()}`,
+              title: "Leaderboard Rank Updated",
+              message: `Your credibility score is live! You are currently ranked #${rank} on the Senior Leaderboard.`,
+              type: "SYSTEM",
+              priority: "HIGH",
+              timestamp: new Date().toISOString(),
+              read: false,
+              actionLink: "/leaderboard",
+              actionText: "View Leaderboard"
+            });
+          }
+        } catch (e) {
+          console.error("Failed to fetch rank for notification", e);
+        }
+      })
+      .catch(console.error);
+
     // Send welcome email
     sendWelcomeEmail(data.email, data.fullName, "senior").then((sent) => {
       if (sent) toast("📧 Welcome email sent to " + data.email, { duration: 4000 });
       else if (!isEmailJSConfigured()) toast("📧 Email simulation: Welcome email → " + data.email, { duration: 4000 });
     });
-    setTimeout(() => router.push("/dashboard"), 800);
+    setTimeout(() => router.push("/dashboard"), 1200);
   };
 
   if (!mounted) return null;

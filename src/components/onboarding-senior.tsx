@@ -212,7 +212,15 @@ export function SeniorFlow({ onComplete, onBack }: { onComplete: (data: SeniorDa
         <div className="mt-1.5 flex justify-between text-[10px] text-muted-foreground"><span>Step {step + 1} of {STEPS.length}</span><span>{Math.round(progress)}%</span></div>
       </div>
       <motion.div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-card/40 p-6 shadow-2xl shadow-pulse-500/5 backdrop-blur-xl md:p-8"
-        initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            if (e.target instanceof HTMLTextAreaElement) return;
+            e.preventDefault();
+            next();
+          }
+        }}
+      >
         <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-pulse-500/5 via-transparent to-fuchsia-500/5" />
         <AnimatePresence mode="wait">
           <motion.div key={`sstep-${step}`} initial={{ x: dir > 0 ? 60 : -60, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: dir < 0 ? 60 : -60, opacity: 0 }}

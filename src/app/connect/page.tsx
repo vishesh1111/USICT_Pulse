@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/select";
 import { MentorCard } from "@/components/mentor-card";
 import { ConnectModal } from "@/components/connect-modal";
-import { MOCK_SENIORS } from "@/lib/mock";
 import { BRANCHES, YEARS } from "@/lib/constants";
 
 // NOTE: `metadata` cannot be exported from a client component (this file uses
@@ -28,8 +27,20 @@ export default function ConnectPage() {
     id: string;
     name: string;
   } | null>(null);
+  const [mentors, setMentors] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
 
-  const filteredMentors = MOCK_SENIORS.filter((mentor) => {
+  React.useEffect(() => {
+    fetch("/api/users?leaderboard=true")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.seniors) setMentors(data.seniors);
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredMentors = mentors.filter((mentor) => {
     const matchesSearch =
       mentor.fullName.toLowerCase().includes(search.toLowerCase()) ||
       mentor.bio?.toLowerCase().includes(search.toLowerCase()) ||
@@ -53,7 +64,7 @@ export default function ConnectPage() {
             Find your mentor
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Real USICT seniors ready to guide you. {filteredMentors.length} mentors match your search.
+            {loading ? "Loading mentors..." : `Real USICT seniors ready to guide you. ${filteredMentors.length} mentors match your search.`}
           </p>
         </div>
 

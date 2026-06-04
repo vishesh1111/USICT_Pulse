@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
+import Link from "next/link";
 
 interface LeaderboardSenior {
   id: string;
@@ -59,7 +60,7 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch("/api/users?leaderboard=true")
+    fetch(`/api/users?leaderboard=true&t=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
       .then((data) => setSeniors(data.seniors || []))
       .catch(console.error)
@@ -160,7 +161,11 @@ export default function LeaderboardPage() {
                     {/* Info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="font-semibold truncate">{senior.fullName}</h3>
+                        <Link href={`/profile/${senior.id}`}>
+                          <h3 className="font-semibold truncate transition-colors hover:text-pulse-400 cursor-pointer">
+                            {senior.fullName}
+                          </h3>
+                        </Link>
                         <Badge variant="secondary" className="text-[10px] bg-purple-500/10 text-purple-400 py-0">
                           <Shield className="mr-0.5 h-2.5 w-2.5" />
                           Senior
@@ -175,29 +180,6 @@ export default function LeaderboardPage() {
                         </span>
                         {senior.clubs.length > 0 && (
                           <span>{senior.clubs.slice(0, 2).join(", ")}</span>
-                        )}
-                      </div>
-                      {/* Links */}
-                      <div className="mt-1.5 flex items-center gap-2">
-                        {senior.linkedin && (
-                          <a
-                            href={senior.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:text-blue-300"
-                          >
-                            <Linkedin className="h-3.5 w-3.5" />
-                          </a>
-                        )}
-                        {senior.github && (
-                          <a
-                            href={senior.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-white"
-                          >
-                            <Github className="h-3.5 w-3.5" />
-                          </a>
                         )}
                       </div>
                     </div>

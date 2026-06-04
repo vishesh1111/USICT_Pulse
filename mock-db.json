@@ -1,0 +1,25 @@
+{
+  "seniors": [
+    {
+      "id": "mock-user-1780563892846",
+      "email": "karan@gmail.com",
+      "fullName": "karan",
+      "role": "SENIOR",
+      "branch": "CSE",
+      "year": 3,
+      "clubs": [
+        "ACM",
+        "Robotics Club",
+        "Drama Club",
+        "Photography Club"
+      ],
+      "cgpa": 6.5,
+      "hasInternship": false,
+      "internshipDetails": "",
+      "seniorScore": 61,
+      "linkedin": "karan0101",
+      "github": "karan1010",
+      "avatarUrl": "https://api.dicebear.com/7.x/avataaars/svg?seed=karan"
+    }
+  ]
+}

@@ -13,9 +13,13 @@ interface ExtendedResource extends MockResource {
 
 interface ResourceCardProps {
   resource: ExtendedResource;
+  isSenior?: boolean;
+  isHidden?: boolean;
+  onHide?: (id: string) => void;
+  onRestore?: (id: string) => void;
 }
 
-export function ResourceCard({ resource }: ResourceCardProps) {
+export function ResourceCard({ resource, isSenior, isHidden, onHide, onRestore }: ResourceCardProps) {
   const typeColors: Record<string, string> = {
     VIDEO: "bg-red-500/10 text-red-500 hover:bg-red-500/20 border-red-500/20",
     PLAYLIST: "bg-red-500/10 text-red-500 hover:bg-red-500/20 border-red-500/20",
@@ -88,17 +92,30 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                 <span className="shrink-0">{timeAgo(resource.createdAt)}</span>
             </div>
             
-            {isFile ? (
-              <Button size="sm" className="w-full" onClick={handleDownload}>
-                Download File <Download className="ml-2 h-3.5 w-3.5" />
-              </Button>
-            ) : (
-              <Button size="sm" className="w-full" asChild>
-                <a href={resource.link} target="_blank" rel="noopener noreferrer">
-                  Open Resource <ExternalLink className="ml-2 h-3.5 w-3.5" />
-                </a>
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {isSenior && (
+                isHidden ? (
+                  <Button size="sm" variant="ghost" onClick={() => onRestore?.(resource.id)} className="text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10">
+                    Restore
+                  </Button>
+                ) : (
+                  <Button size="sm" variant="ghost" onClick={() => onHide?.(resource.id)} className="text-muted-foreground hover:text-red-400 hover:bg-red-500/10">
+                    Hide
+                  </Button>
+                )
+              )}
+              {isFile ? (
+                <Button size="sm" className="flex-1" onClick={handleDownload}>
+                  Download File <Download className="ml-2 h-3.5 w-3.5" />
+                </Button>
+              ) : (
+                <Button size="sm" className="flex-1" asChild>
+                  <a href={resource.link} target="_blank" rel="noopener noreferrer">
+                    Open Resource <ExternalLink className="ml-2 h-3.5 w-3.5" />
+                  </a>
+                </Button>
+              )}
+            </div>
         </div>
       </CardContent>
     </Card>

@@ -209,18 +209,20 @@ export function GlowPulse({
     amber: "bg-amber-500/20 dark:bg-amber-500/30",
   };
 
+  const shouldAnimate = color === "pulse";
+
   return (
     <motion.div
       className={`absolute rounded-full blur-2xl ${colorMap[color]} ${className || ""}`}
-      animate={{
+      animate={shouldAnimate ? {
         scale: [1, 1.3, 1],
         opacity: [0.4, 0.7, 0.4],
-      }}
-      transition={{
+      } : { scale: 1, opacity: 0.5 }}
+      transition={shouldAnimate ? {
         duration: 3,
         repeat: Infinity,
         ease: "easeInOut",
-      }}
+      } : {}}
     />
   );
 }
