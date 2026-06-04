@@ -4,8 +4,6 @@
 
 # USICT PULSE
 
-### The pulse of USICT — discover, connect, grow.
-
 A premium, AI-powered college intelligence platform built exclusively for students of **USICT, GGSIPU, New Delhi**. Find opportunities, connect with seniors and alumni, review teachers, share resources, and ask anything — all in one place.
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=flat-square&logo=next.js)](https://nextjs.org/)
@@ -269,6 +267,10 @@ Built by students, for students. Free to use and adapt for your own college comm
 
 <div align="center">
 
+<img width="1470" height="956" alt="Screenshot 2026-06-04 at 11 50 21 PM" src="https://github.com/user-attachments/assets/14fc4fbe-4f02-479d-adba-ac888c8e1805" />
+<img width="1470" height="956" alt="Screenshot 2026-06-04 at 11 51 44 PM" src="https://github.com/user-attachments/assets/b423d75f-2aee-4391-a8a7-0a30a3dd43c5" />
+<img width="1470" height="956" alt="Screenshot 2026-06-04 at 11 51 06 PM" src="https://github.com/user-attachments/assets/b78682fa-e24f-4425-8752-8e43bc8a3e4e" />
+<img width="1470" height="956" alt="Screenshot 2026-06-04 at 11 50 54 PM" src="https://github.com/user-attachments/assets/6fef3704-1f97-49df-a824-16f04250004f" />
 
 
 [⬆ Back to top](#usict-pulse)
