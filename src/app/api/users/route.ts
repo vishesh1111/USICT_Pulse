@@ -138,7 +138,7 @@ export async function GET(req: Request) {
           const allMockSeniors = getMockSeniors();
           const dbEmails = new Set(dbSeniors.map((s: any) => s.email));
           const mockOnly = allMockSeniors
-            .filter(s => s.seniorScore != null && !dbEmails.has(s.email))
+            .filter(s => (s as any).seniorScore != null && !dbEmails.has(s.email))
             .map(s => ({
               id: s.id,
               fullName: s.fullName,
@@ -151,7 +151,7 @@ export async function GET(req: Request) {
               mentoringTopics: s.mentoringTopics || [],
               linkedin: s.linkedin || null,
               github: s.github || null,
-              seniorScore: s.seniorScore,
+              seniorScore: (s as any).seniorScore,
               avatarUrl: s.avatarUrl,
               createdAt: new Date().toISOString(),
               _count: { answers: 0 },
@@ -196,8 +196,8 @@ export async function GET(req: Request) {
     if (leaderboard === "true") {
       const allSeniors = getMockSeniors();
       const seniors = [...allSeniors]
-        .filter(s => s.seniorScore !== undefined && s.seniorScore !== null)
-        .sort((a, b) => (b.seniorScore || 0) - (a.seniorScore || 0))
+        .filter(s => (s as any).seniorScore !== undefined && (s as any).seniorScore !== null)
+        .sort((a, b) => ((b as any).seniorScore || 0) - ((a as any).seniorScore || 0))
         .map((senior) => ({
           id: senior.id,
           fullName: senior.fullName,
@@ -210,7 +210,7 @@ export async function GET(req: Request) {
           mentoringTopics: senior.mentoringTopics || [],
           linkedin: senior.linkedin || null,
           github: senior.github || null,
-          seniorScore: senior.seniorScore,
+          seniorScore: (senior as any).seniorScore,
           avatarUrl: senior.avatarUrl,
           createdAt: new Date().toISOString(),
           _count: { answers: Math.floor(Math.random() * 10) },

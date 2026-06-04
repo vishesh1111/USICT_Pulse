@@ -333,15 +333,15 @@ export default function AskPage() {
                                   <span className="text-sm font-medium">
                                     {ans.author.fullName}
                                   </span>
-                                  {ans.author.role === "SENIOR" && (
+                                  {(ans.author as any).role === "SENIOR" && (
                                     <Badge
                                       variant="secondary"
                                       className="text-[9px] bg-purple-500/10 text-purple-400 py-0"
                                     >
                                       <Shield className="mr-0.5 h-2.5 w-2.5" />
                                       Senior
-                                      {ans.author.seniorScore
-                                        ? ` · ${ans.author.seniorScore}pts`
+                                      {(ans.author as any).seniorScore
+                                        ? ` · ${(ans.author as any).seniorScore}pts`
                                         : ""}
                                     </Badge>
                                   )}

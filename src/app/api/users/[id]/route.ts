@@ -93,12 +93,12 @@ export async function GET(
 
       // Score Breakdown (only for seniors)
       let scoreBreakdown = null;
-      if (mockUser.role === "SENIOR" || mockUser.role === "senior") {
-        const score = mockUser.seniorScore || 0;
+      if (mockUser.role === "SENIOR") {
+        const score = (mockUser as any).seniorScore || 0;
         scoreBreakdown = [
           { label: "Base Profile Setup", value: 20 },
           { label: "Academics & CGPA", value: (mockUser.cgpa && mockUser.cgpa > 8) ? 20 : 10 },
-          { label: "Internship Experience", value: mockUser.hasInternship ? 25 : 0 },
+          { label: "Internship Experience", value: (mockUser as any).hasInternship ? 25 : 0 },
           { label: "Community Answers", value: Math.min(answersCount * 5, 20) },
           { label: "Resources Added", value: Math.min(resourcesCount * 5, 15) },
           { label: "Opportunities Posted", value: Math.min(opportunitiesCount * 10, 20) },

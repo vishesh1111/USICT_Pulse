@@ -44,7 +44,7 @@ export default function ConnectPage() {
     const matchesSearch =
       mentor.fullName.toLowerCase().includes(search.toLowerCase()) ||
       mentor.bio?.toLowerCase().includes(search.toLowerCase()) ||
-      mentor.mentoringTopics?.some((t) =>
+      mentor.mentoringTopics?.some((t: string) =>
         t.toLowerCase().includes(search.toLowerCase())
       );
     const matchesBranch =

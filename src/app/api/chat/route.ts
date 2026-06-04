@@ -49,7 +49,7 @@ export async function POST(req: Request) {
 Question by ${q.author?.fullName ?? 'Anonymous'}: ${q.title}
 ${q.body}
 Answers:
-${q.answers.map(a => `- ${a.author?.fullName ?? 'Anonymous'} (${a.author?.role ?? 'unknown'}): ${a.body}`).join('\n')}
+${q.answers.map((a: any) => `- ${a.author?.fullName ?? 'Anonymous'} (${a.author?.role ?? 'unknown'}): ${a.body}`).join('\n')}
     `).join('\n\n');
 
     // 2. Format static data

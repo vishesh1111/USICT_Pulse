@@ -59,7 +59,7 @@ export default function ResourcesPage() {
     const matchesSearch =
       resource.title.toLowerCase().includes(search.toLowerCase()) ||
       resource.description.toLowerCase().includes(search.toLowerCase()) ||
-      resource.tags.some(t => t.toLowerCase().includes(search.toLowerCase()));
+      resource.tags.some((t: string) => t.toLowerCase().includes(search.toLowerCase()));
       
     const matchesSubject =
       subjectFilter === "all" || resource.subject === subjectFilter;

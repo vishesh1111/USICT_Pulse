@@ -161,7 +161,7 @@ export interface ScoredMentor {
 export function getRecommendedMentors(profile: UserProfile, seniors: any[]): ScoredMentor[] {
   return seniors
     .map(mentor => {
-      const topicOverlap = (mentor.mentoringTopics || []).filter(topic =>
+      const topicOverlap = (mentor.mentoringTopics || []).filter((topic: string) =>
         profile.interests.some(i =>
           i.toLowerCase().includes(topic.toLowerCase()) || topic.toLowerCase().includes(i.toLowerCase())
         )

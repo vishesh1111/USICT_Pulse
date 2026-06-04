@@ -22,6 +22,9 @@ export interface MockUser {
   position?: string;
   linkedin?: string;
   github?: string;
+  seniorScore?: number;
+  hasInternship?: boolean;
+  internshipDetails?: string;
 }
 
 export interface MockTeacher {
@@ -101,7 +104,8 @@ export type ResourceType =
   | "GITHUB"
   | "PLAYLIST"
   | "COURSE"
-  | "CHEATSHEET";
+  | "CHEATSHEET"
+  | "DRIVE";
 
 export type ResourceSubject =
   | "DBMS"
@@ -113,7 +117,8 @@ export type ResourceSubject =
   | "CN"
   | "SYSTEM_DESIGN"
   | "AI_ML"
-  | "WEB_DEV";
+  | "WEB_DEV"
+  | "PYQS";
 
 export interface MockResource {
   id: string;

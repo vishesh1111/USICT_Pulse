@@ -8,7 +8,7 @@ import { daysUntil, formatDate } from "@/lib/utils";
 import type { MockOpportunity } from "@/lib/mock/types";
 
 interface OpportunityCardProps {
-  opportunity: MockOpportunity;
+  opportunity: any;
   compact?: boolean;
 }
 
@@ -96,15 +96,15 @@ export function OpportunityCard({ opportunity, compact }: OpportunityCardProps) 
 
             {opportunity.branches.length > 0 && (
               <div className="mb-3 flex flex-wrap gap-1">
-                {opportunity.branches.map((b) => (
-                  <BranchBadge key={b} branch={b} size="sm" />
+                {opportunity.branches.map((b: any) => (
+                  <BranchBadge key={b} branch={b as any} size="sm" />
                 ))}
               </div>
             )}
 
             {opportunity.tags.length > 0 && (
               <div className="mb-4 flex flex-wrap gap-1">
-                {opportunity.tags.slice(0, 2).map((t) => (
+                {opportunity.tags.slice(0, 2).map((t: string) => (
                   <span
                     key={t}
                     className="rounded px-1.5 py-0.5 bg-accent text-[10px] text-accent-foreground"

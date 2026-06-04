@@ -23,7 +23,7 @@ export function CreateOpportunityDialog({ onSuccess }: { onSuccess: () => void }
   const [loading, setLoading] = useState(false);
 
   // Only seniors can see this
-  if (!profile || (profile.role !== "SENIOR" && profile.role !== "senior")) {
+  if (!profile || (profile.role?.toLowerCase() !== "senior")) {
     return null;
   }
 

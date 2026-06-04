@@ -31,7 +31,7 @@ export async function GET() {
         });
         
         // Merge mock resources with DB resources, ensuring mock resources aren't fully overridden if DB is empty
-        const merged = [...dbResources, ...MOCK_RESOURCES.filter(m => !dbResources.some(d => d.id === m.id))];
+        const merged = [...dbResources, ...MOCK_RESOURCES.filter(m => !dbResources.some((d: any) => d.id === m.id))];
         
         return NextResponse.json({ resources: merged });
       } catch (dbError) {

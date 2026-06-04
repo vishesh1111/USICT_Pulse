@@ -26,7 +26,7 @@ export function AddTeacherReviewDialog({ teacherId, teacherName, onSuccess }: { 
   const [anonymous, setAnonymous] = useState(false);
 
   // Only seniors can see this
-  if (!profile || (profile.role !== "SENIOR" && profile.role !== "ALUMNI" && profile.role !== "senior" && profile.role !== "alumni")) {
+  if (!profile || !["senior", "alumni"].includes(profile.role?.toLowerCase())) {
     return null;
   }
 

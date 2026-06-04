@@ -238,13 +238,11 @@ export default function OnboardingPage() {
             useNotificationStore.getState().addNotification({
               id: `rank-${Date.now()}`,
               title: "Leaderboard Rank Updated",
-              message: `Your credibility score is live! You are currently ranked #${rank} on the Senior Leaderboard.`,
+              body: `Your credibility score is live! You are currently ranked #${rank} on the Senior Leaderboard.`,
               type: "SYSTEM",
-              priority: "HIGH",
-              timestamp: new Date().toISOString(),
               read: false,
-              actionLink: "/leaderboard",
-              actionText: "View Leaderboard"
+              createdAt: new Date().toISOString(),
+              link: "/leaderboard",
             });
           }
         } catch (e) {
