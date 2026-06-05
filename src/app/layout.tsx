@@ -6,7 +6,8 @@ import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Splash } from "@/components/splash";
-import { ChatWidget } from "@/components/chat-widget";
+// ChatWidget is lazy-loaded via a client wrapper to reduce initial JS bundle (~200KB saved)
+import { ChatWidgetLazy } from "@/components/chat-widget-lazy";
 import { RouteGuard } from "@/components/route-guard";
 
 const inter = Inter({
@@ -65,7 +66,7 @@ export default function RootLayout({
               <RouteGuard>{children}</RouteGuard>
             </main>
             <SiteFooter />
-            <ChatWidget />
+            <ChatWidgetLazy />
           </div>
         </Providers>
       </body>

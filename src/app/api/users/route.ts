@@ -164,7 +164,11 @@ export async function GET(req: Request) {
           })), ...mockOnly]
             .sort((a, b) => (b.seniorScore || 0) - (a.seniorScore || 0));
 
-          return NextResponse.json({ seniors: merged });
+          return NextResponse.json({ seniors: merged }, {
+            headers: {
+              "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+            },
+          });
         }
 
         const where: any = {};
@@ -186,7 +190,11 @@ export async function GET(req: Request) {
           },
         });
 
-        return NextResponse.json({ users });
+        return NextResponse.json({ users }, {
+          headers: {
+            "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+          },
+        });
       } catch (dbError) {
         console.warn("[API /users GET] Database error, using fallback:", dbError);
       }

@@ -31,8 +31,14 @@ export function RouteGuard({ children }: { children: React.ReactNode }) {
     }
   }, [mounted, profile, pathname, router]);
 
-  // Don't flash protected content before mounting/checking
-  if (!mounted) {
+  // Only show spinner for protected routes while checking auth state.
+  // Public paths render children immediately — this enables SSR for
+  // the landing page and onboarding, dramatically reducing first-load time.
+  const isPublicPath = PUBLIC_PATHS.some(
+    (path) => pathname === path || (pathname.startsWith(`${path}/`) && path !== "/")
+  );
+
+  if (!mounted && !isPublicPath) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <span className="h-8 w-8 animate-spin rounded-full border-4 border-pulse-500 border-t-transparent" />

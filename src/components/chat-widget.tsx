@@ -4,7 +4,9 @@ import * as React from "react";
 
 import { Bot, X, MessageSquare, Send, Sparkles, User, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import ReactMarkdown from "react-markdown";
+import dynamic from "next/dynamic";
+// Lazy-load ReactMarkdown — only needed when rendering bot messages inside the chat panel
+const ReactMarkdown = dynamic(() => import("react-markdown"), { ssr: false });
 import { useUserStore } from "@/lib/user-store";
 import { Button } from "@/components/ui/button";
 

@@ -259,7 +259,9 @@ export default function OnboardingPage() {
     setTimeout(() => router.push("/dashboard"), 1200);
   };
 
-  if (!mounted) return null;
+  // Only hide content when redirecting an already-onboarded user to dashboard.
+  // New users see the onboarding UI immediately via SSR — no blank screen.
+  if (mounted && profile?.onboardedAt) return null;
 
   return (
     <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden">

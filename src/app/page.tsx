@@ -70,12 +70,14 @@ export default function HomePage() {
   }, []);
 
   React.useEffect(() => {
-    if (mounted && !profile?.onboardedAt) {
-      router.push("/onboarding");
+    // Redirect already-onboarded users to dashboard
+    if (mounted && profile?.onboardedAt) {
+      router.push("/dashboard");
     }
   }, [mounted, profile, router]);
 
-  if (!mounted || !profile?.onboardedAt) {
+  // Only hide content when we're about to redirect an authenticated user
+  if (mounted && profile?.onboardedAt) {
     return null;
   }
 
