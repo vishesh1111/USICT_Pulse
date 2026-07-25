@@ -274,6 +274,7 @@ Built by students, for students. Free to use and adapt for your own college comm
 <img width="1470" height="956" alt="Screenshot 2026-06-04 at 11 51 44 PM" src="https://github.com/user-attachments/assets/b423d75f-2aee-4391-a8a7-0a30a3dd43c5" />
 <img width="1470" height="956" alt="Screenshot 2026-06-04 at 11 51 06 PM" src="https://github.com/user-attachments/assets/b78682fa-e24f-4425-8752-8e43bc8a3e4e" />
 <img width="1470" height="956" alt="Screenshot 2026-06-04 at 11 50 54 PM" src="https://github.com/user-attachments/assets/6fef3704-1f97-49df-a824-16f04250004f" />
+<img width="1280" height="1378" alt="1780595846201" src="https://github.com/user-attachments/assets/8b27e622-4723-4e25-9da1-acb599f9963a" />
 
 
 [⬆ Back to top](#usict-pulse)
